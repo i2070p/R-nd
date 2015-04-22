@@ -1,0 +1,6 @@
+bison -d def.yy
+def.yy: konflikty: 1 przesunięcie/redukcja
+g++ -c def.tab.cc
+flex z5.l
+gcc -c lex.yy.c
+g++ lex.yy.o def.tab.o -o leks -ll

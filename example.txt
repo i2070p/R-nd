@@ -1,0 +1,7 @@
+$tmp0 = 4 add 5
+a=$tmp0b=19$tmp1 = b add a
+c=$tmp1$tmp2 = 2 mul c
+$tmp3 = b add $tmp2
+d=$tmp3cond_var=0$tmp4 = 9 bne a
+cond_var=255$tmp5 = 33 bne b
+d=128c=255

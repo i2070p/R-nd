@@ -1,0 +1,17 @@
+runner <<
+	a : int <- 5 + 4;
+	b : int <- 19;
+	c : int <- a + b;
+
+	d : int <- c * 2 + b;
+
+	cond_var : int <- 0;
+
+	@? (a = 9) <<
+		cond_var <- 255;
+		@? (b = 33) <<
+			d <- 128;
+		>>
+		c <- 255;
+	>>
+>>

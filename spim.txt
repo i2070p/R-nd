@@ -1,0 +1,55 @@
+.data
+$tmp0: .word 1
+$tmp1: .word 1
+$tmp2: .word 1
+$tmp3: .word 1
+$tmp4: .word 1
+$tmp5: .word 1
+a: .word 1
+b: .word 1
+c: .word 1
+cond_var: .word 1
+d: .word 1
+.text
+li $t0, 4
+li $t1, 5
+add $t0, $t0, $t1
+sw $t0, $tmp0
+lw $t0, $tmp0
+sw $t0, a
+li $t0, 19
+sw $t0, b
+lw $t0, b
+lw $t1, a
+add $t0, $t0, $t1
+sw $t0, $tmp1
+lw $t0, $tmp1
+sw $t0, c
+li $t0, 2
+lw $t1, c
+mul $t0, $t0, $t1
+sw $t0, $tmp2
+lw $t0, b
+lw $t1, $tmp2
+add $t0, $t0, $t1
+sw $t0, $tmp3
+lw $t0, $tmp3
+sw $t0, d
+li $t0, 0
+sw $t0, cond_var
+li $t0, 9
+lw $t1, a
+bne $t0, $t1, label0
+sw $t0, $tmp4
+li $t0, 255
+sw $t0, cond_var
+li $t0, 33
+lw $t1, b
+bne $t0, $t1, label1
+sw $t0, $tmp5
+li $t0, 128
+sw $t0, d
+label1:
+li $t0, 255
+sw $t0, c
+label0:
