@@ -98,7 +98,7 @@ downto      {
 
 \ |\t			{}
 \n			{yylineno++;}
-.			{yyerror("B³¹d leksykalny\n");}
+.			{yyerror("BÅ‚Ä…d leksykalny\n");}
 %%
 int yyerror(const char *msg, ...)
 {

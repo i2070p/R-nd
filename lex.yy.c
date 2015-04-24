@@ -1081,7 +1081,7 @@ YY_RULE_SETUP
 case 51:
 YY_RULE_SETUP
 #line 101 "z5.l"
-{yyerror("B³¹d leksykalny\n");}
+{yyerror("BÅ‚Ä…d leksykalny\n");}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
