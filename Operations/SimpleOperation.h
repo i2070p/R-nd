@@ -1,17 +1,14 @@
-/* 
- * File:   Operation.h
- * Author: meti
- *
- * Created on 22 kwiecień 2015, 09:44
- */
-
 #pragma once
 
 #include "Operation.h"
 
-class SimpleOperation: public Operation{
-public:            
-    string generate() = 0;
+class SimpleOperation : public Operation {
+public:
+
+    SimpleOperation(Operation* parent) : Operation(parent) {
+    };
+
+    virtual string generate(SpimCodeContainer * spimCode) = 0;
 };
 
 

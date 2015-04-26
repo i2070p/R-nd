@@ -1,20 +1,29 @@
-/* 
- * File:   Operation.h
- * Author: meti
- *
- * Created on 22 kwiecień 2015, 09:44
- */
-
 #pragma once
 
-#include <map>
-#include <string>
+#include "../SpimCodeContainer.h"
+#include <sstream>
 
 using namespace std;
 
 class Operation {
-public:            
-    string generate() = 0;
+public:
+
+    Operation(Operation* opr) : parent(opr) {
+
+    }
+
+    virtual string generate(SpimCodeContainer * spimCode) = 0;
+
+    virtual Operation * getParent() {
+        return this->parent; 
+    }
+
+    virtual string toString() {
+        return "This is operation";
+    }
+    
+protected:
+    Operation * parent;
 };
 
 

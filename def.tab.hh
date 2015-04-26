@@ -80,9 +80,9 @@ typedef union YYSTYPE
 {
 
 /* Line 2068 of yacc.c  */
-#line 36 "def.yy"
+#line 29 "def.yy"
 
- char *text;
+ char *text; 
  int	ival;
  float fval;
 

@@ -73,14 +73,15 @@
 #include <sstream>
 #include <stack>
 #include <vector>
-#include <string>
+#include <string> 
 #include "StackAdapter.h"
 #include <iostream>
-#include "Element.h"
-#include <map>
-#define INFILE_ERROR 1
+#include "Elements/ElementFactory.h"
+#include "Operations/Builder.h"
+#include <map> 
+#define INFILE_ERROR 1  
 #define OUTFILE_ERROR 2
-
+ 
 extern "C" int yylex();
 extern "C" int yyerror(const char *msg, ...);
 
@@ -89,21 +90,13 @@ using namespace std;
 
 ofstream trojki;
 ofstream spim;
-int adr = 0;
-int tmp = 0; 
-int labelId = 0;
-string tmpVar;
 
-StackAdapter<Element*> mStack; 
-StackAdapter<string> lStack; 
-map<string, Element*> vMap;
-vector<string> spimCode;
-map<string, int> adressMap;
-void singleCalc(string op);
+Builder builder;
+
 
 
 /* Line 268 of yacc.c  */
-#line 107 "def.tab.cc"
+#line 100 "def.tab.cc"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -173,16 +166,16 @@ typedef union YYSTYPE
 {
 
 /* Line 293 of yacc.c  */
-#line 36 "def.yy"
+#line 29 "def.yy"
 
- char *text;
+ char *text; 
  int	ival;
  float fval;
 
 
 
 /* Line 293 of yacc.c  */
-#line 186 "def.tab.cc"
+#line 179 "def.tab.cc"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -194,7 +187,7 @@ typedef union YYSTYPE
 
 
 /* Line 343 of yacc.c  */
-#line 198 "def.tab.cc"
+#line 191 "def.tab.cc"
 
 #ifdef short
 # undef short
@@ -484,7 +477,7 @@ static const yytype_int8 yyrhs[] =
       49,    -1,    50,    49,    51,    49,    -1,    25,    47,    26,
       -1,    48,    -1,    13,    41,    52,    42,    -1,    14,    -1,
       57,    53,    57,    -1,    43,    -1,    35,     6,    57,    -1,
-      55,     6,    57,    -1,    35,    44,    56,    -1,    27,    -1,
+      35,    44,    56,    -1,    55,     6,    57,    -1,    27,    -1,
       28,    -1,    57,    36,    58,    -1,    57,    37,    58,    -1,
       58,    -1,    58,    38,    59,    -1,    58,    39,    59,    -1,
       59,    -1,    35,    -1,    33,    -1,    34,    -1,    41,    57,
@@ -494,9 +487,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    87,    87,    93,    94,    98,    99,   100,   106,   115,
-     116,   119,   122,   130,   135,   140,   152,   167,   174,   175,
-     179,   182,   185,   188,   191,   194,   197,   198,   199,   200
+       0,    80,    80,    86,    87,    91,    92,    93,    95,   101,
+     102,   105,   108,   113,   118,   123,   129,   133,   139,   140,
+     144,   147,   150,   153,   156,   159,   162,   163,   164,   165
 };
 #endif
 
@@ -534,7 +527,7 @@ static const yytype_uint16 yytoknum[] =
 static const yytype_uint8 yyr1[] =
 {
        0,    45,    46,    47,    47,    48,    48,    48,    48,    49,
-      49,    50,    51,    52,    53,    54,    54,    55,    56,    56,
+      49,    50,    51,    52,    53,    54,    55,    55,    56,    56,
       57,    57,    57,    58,    58,    58,    59,    59,    59,    59
 };
 
@@ -554,7 +547,7 @@ static const yytype_uint8 yydefact[] =
        0,     0,     0,     0,     1,     0,     0,     0,     4,     0,
        0,     0,     0,     0,     0,     2,     3,     0,    10,     7,
        6,     0,     5,    27,    28,    26,     0,     0,     0,    22,
-      25,    15,    18,    19,    17,     0,    12,     0,    16,     0,
+      25,    15,    18,    19,    16,     0,    12,     0,    17,     0,
       11,     0,     0,    14,     0,     0,     0,     9,     8,    29,
       20,    21,    13,    23,    24
 };
@@ -1462,8 +1455,8 @@ yyreduce:
         case 2:
 
 /* Line 1806 of yacc.c  */
-#line 87 "def.yy"
-    {
+#line 80 "def.yy"
+    { builder.traverse(); cout << "beg\n";
          
     }
     break;
@@ -1471,248 +1464,220 @@ yyreduce:
   case 3:
 
 /* Line 1806 of yacc.c  */
-#line 93 "def.yy"
+#line 86 "def.yy"
     {}
     break;
 
   case 4:
 
 /* Line 1806 of yacc.c  */
-#line 94 "def.yy"
+#line 87 "def.yy"
     {}
     break;
 
   case 5:
 
 /* Line 1806 of yacc.c  */
-#line 98 "def.yy"
-    { }
+#line 91 "def.yy"
+    { builder.addExpressionToSimpleOperation(); }
     break;
 
   case 6:
 
 /* Line 1806 of yacc.c  */
-#line 99 "def.yy"
-    {}
+#line 92 "def.yy"
+    { builder.addExpressionToSimpleOperation(); }
     break;
 
   case 7:
 
 /* Line 1806 of yacc.c  */
-#line 100 "def.yy"
-    {
-	string label = lStack.pop();
-	stringstream line;
-	line << label << ":";
-	spimCode.push_back(line.str());
+#line 93 "def.yy"
+    { builder.endIf();
     }
     break;
 
   case 8:
 
 /* Line 1806 of yacc.c  */
-#line 106 "def.yy"
+#line 95 "def.yy"
     {
-	string label = lStack.pop();
-	stringstream line;
-	line << label << ":";
-	spimCode.push_back(line.str());
+        builder.endIf();
     }
     break;
 
   case 9:
 
 /* Line 1806 of yacc.c  */
-#line 115 "def.yy"
-    {}
+#line 101 "def.yy"
+    { }
     break;
 
   case 10:
 
 /* Line 1806 of yacc.c  */
-#line 116 "def.yy"
+#line 102 "def.yy"
     { }
     break;
 
   case 11:
 
 /* Line 1806 of yacc.c  */
-#line 119 "def.yy"
-    {}
+#line 105 "def.yy"
+    { builder.startIf(); }
     break;
 
   case 12:
 
 /* Line 1806 of yacc.c  */
-#line 122 "def.yy"
+#line 108 "def.yy"
     {	
-	string label = lStack.pop();
-	stringstream line;
-	line << label << ":";
-	spimCode.push_back(line.str());
+    builder.addElse();
 }
     break;
 
   case 13:
 
 /* Line 1806 of yacc.c  */
-#line 130 "def.yy"
+#line 113 "def.yy"
     {
-	singleCalc(tmpVar);  
+
     }
     break;
 
   case 14:
 
 /* Line 1806 of yacc.c  */
-#line 135 "def.yy"
+#line 118 "def.yy"
     {
-	tmpVar="bne";
+        builder.addToExpression(ElementFactory::createElement(EQUAL));
     }
     break;
 
   case 15:
 
 /* Line 1806 of yacc.c  */
-#line 140 "def.yy"
+#line 123 "def.yy"
     {
-  	Element* el = mStack.pop();
-
-	stringstream line;
-	line << "l" << (el->isInt() ? "i" : "w") << " $t0" << ", " << el->toString();
-	spimCode.push_back(line.str());
-	line.str("");
-	line << "sw " << "$t0" << ", " << (yyvsp[(1) - (3)].text);
- 	spimCode.push_back(line.str());
- 	line.str("");
- 	trojki << (yyvsp[(1) - (3)].text) << "=" << el->toString();	 
+        builder.buildAssignment((yyvsp[(1) - (3)].text));
     }
     break;
 
   case 16:
 
 /* Line 1806 of yacc.c  */
-#line 152 "def.yy"
+#line 129 "def.yy"
     {
-  	Element* el = mStack.pop();
+        builder.buildDeclaration((yyvsp[(1) - (3)].text));
 
-	stringstream line;
-	line << "l"<< (el->isInt() ? "i" : "w") << " $t0" << ", " << el->toString();
-	spimCode.push_back(line.str());
-	line.str("");
-	line << "sw " << "$t0" << ", " << tmpVar;
- 	spimCode.push_back(line.str());
- 	line.str("");
- 	trojki << tmpVar << "=" << el->toString();	 
     }
     break;
 
   case 17:
 
 /* Line 1806 of yacc.c  */
-#line 167 "def.yy"
+#line 133 "def.yy"
     {
-	adressMap[(yyvsp[(1) - (3)].text)] = adr++;
-	tmpVar=(yyvsp[(1) - (3)].text);
+	 
     }
     break;
 
   case 18:
 
 /* Line 1806 of yacc.c  */
-#line 174 "def.yy"
-    {}
+#line 139 "def.yy"
+    {builder.setDataType(T_INT);}
     break;
 
   case 19:
 
 /* Line 1806 of yacc.c  */
-#line 175 "def.yy"
-    {}
+#line 140 "def.yy"
+    {builder.setDataType(T_FLOAT);}
     break;
 
   case 20:
 
 /* Line 1806 of yacc.c  */
-#line 179 "def.yy"
+#line 144 "def.yy"
     {
-		singleCalc("add");            
+         builder.addToExpression(ElementFactory::createElement(ADDITION));
     }
     break;
 
   case 21:
 
 /* Line 1806 of yacc.c  */
-#line 182 "def.yy"
-    {
-		singleCalc("sub");          
+#line 147 "def.yy"
+    {  
+      builder.addToExpression(ElementFactory::createElement(SUBTRACTION)); 
     }
     break;
 
   case 22:
 
 /* Line 1806 of yacc.c  */
-#line 185 "def.yy"
+#line 150 "def.yy"
     {}
     break;
 
   case 23:
 
 /* Line 1806 of yacc.c  */
-#line 188 "def.yy"
+#line 153 "def.yy"
     {
-		singleCalc("mul");
+builder.addToExpression(ElementFactory::createElement(MULTIPLICATION));
     }
     break;
 
   case 24:
 
 /* Line 1806 of yacc.c  */
-#line 191 "def.yy"
-    {
-		singleCalc("div");
+#line 156 "def.yy"
+    {  
+builder.addToExpression(ElementFactory::createElement(DIVISION));
     }
     break;
 
   case 25:
 
 /* Line 1806 of yacc.c  */
-#line 194 "def.yy"
+#line 159 "def.yy"
     {}
     break;
 
   case 26:
 
 /* Line 1806 of yacc.c  */
-#line 197 "def.yy"
-    {mStack.push( new Element((yyvsp[(1) - (1)].text)));}
+#line 162 "def.yy"
+    {builder.addToExpression(ElementFactory::createElement((yyvsp[(1) - (1)].text)));}
     break;
 
   case 27:
 
 /* Line 1806 of yacc.c  */
-#line 198 "def.yy"
-    {mStack.push( new Element((yyvsp[(1) - (1)].ival)));}
+#line 163 "def.yy"
+    {builder.addToExpression(ElementFactory::createElement((yyvsp[(1) - (1)].ival)));}
     break;
 
   case 28:
 
 /* Line 1806 of yacc.c  */
-#line 199 "def.yy"
-    {mStack.push( new Element((yyvsp[(1) - (1)].fval)));}
+#line 164 "def.yy"
+    {builder.addToExpression(ElementFactory::createElement((yyvsp[(1) - (1)].fval)));}
     break;
 
   case 29:
 
 /* Line 1806 of yacc.c  */
-#line 200 "def.yy"
+#line 165 "def.yy"
     {}
     break;
 
 
 
 /* Line 1806 of yacc.c  */
-#line 1716 "def.tab.cc"
+#line 1681 "def.tab.cc"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1943,66 +1908,11 @@ yyreturn:
 
 
 /* Line 2067 of yacc.c  */
-#line 203 "def.yy"
-
+#line 168 "def.yy"
+  
 int main(int argc, char *argv[])
-{
-      	trojki.open ("example.txt");
-		
+{		
 	yyparse();
-	trojki.close();
-
-	spim.open("spim.txt");	
-	spim << ".data\n";
-	for(map<string,int>::iterator it = adressMap.begin(); it != adressMap.end(); ++it) {
-  		spim << it->first << ": .word 1\n";
-	}
-	spim << ".text\n";
-	for(std::vector<string>::size_type i = 0; i != spimCode.size(); i++) {
-    		spim << spimCode[i] << "\n";
-	}
-	spim.close();
 	return 0;
-}
-
-void singleCalc(string op)
-{
-	stringstream sTmp;
-	stringstream line;
-
-	Element* first = mStack.pop();
-	Element* second = mStack.pop();
- 
-	sTmp << "$tmp" << tmp++; 
-	line << "l" << (first->isInt() ? "i" : "w") << " $t0, " << first->toString();
-	spimCode.push_back(line.str());
-	line.str("");
-
-	line << "l" << (second->isInt() ? "i" : "w") << " $t1, " << second->toString();
-	spimCode.push_back(line.str());
-	line.str("");
-
-	if (op!="bne") {
-		line << op << " $t0, $t0, $t1";
-		spimCode.push_back(line.str());
-		line.str("");
-	} else {
-		line << "label" << labelId++;
-		string label = line.str();
-		lStack.push(label);
-		line.str("");
-		line << op << " $t0, $t1, " << label;
-		spimCode.push_back(line.str());
-		line.str("");
-	}
-
-	line << "sw $t0, " << sTmp.str();
-	spimCode.push_back(line.str());
-	line.str("");
-
-	mStack.push(new Element(sTmp.str()));
-	adressMap[sTmp.str()] = adr++;
-	trojki  << mStack.top()->toString() << " = " << first->toString() << " " << op << " " << second->toString() << endl;
-	
 }
 
