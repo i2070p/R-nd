@@ -29,7 +29,11 @@ public:
     int nextAdr() {
         return this->adr++;
     }
-
+    
+    int nextLabel() {
+        return this->lbl++;
+    }
+    
     string toString() {
         stringstream ss;
         ss << this->variables.str() << endl << operations.str() << endl;
@@ -38,6 +42,6 @@ public:
 
 protected:
     stringstream variables, operations;
-    int tmp, adr;
+    int tmp, adr, lbl;
 };
 

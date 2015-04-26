@@ -81,7 +81,7 @@
 #include <map> 
 #define INFILE_ERROR 1  
 #define OUTFILE_ERROR 2
- 
+    
 extern "C" int yylex();
 extern "C" int yyerror(const char *msg, ...);
 
@@ -90,7 +90,7 @@ using namespace std;
 
 ofstream trojki;
 ofstream spim;
-
+ 
 Builder builder;
 
 
@@ -1541,7 +1541,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 113 "def.yy"
     {
-
+   
     }
     break;
 

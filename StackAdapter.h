@@ -13,8 +13,20 @@ public:
         return result;
     }
 
+    T pop_front() {
+        T result = st.at(0);
+        st.erase(st.begin());
+        return result;
+    }
+
     T top() {
         return st.back();
+    }
+
+    T getAndErase(int i) {
+        T result = st.at(i);
+        st.erase(st.begin() + i);
+        return result;
     }
 
     void push(T el) {

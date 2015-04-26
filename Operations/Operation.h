@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../SpimCodeContainer.h"
+#include "../Elements/ElementUtilities.h"
 #include <sstream>
 
 using namespace std;
@@ -12,16 +13,16 @@ public:
 
     }
 
-    virtual string generate(SpimCodeContainer * spimCode) = 0;
+    virtual void generate(SpimCodeContainer* spimCode) = 0;
 
     virtual Operation * getParent() {
-        return this->parent; 
+        return this->parent;
     }
 
     virtual string toString() {
         return "This is operation";
     }
-    
+
 protected:
     Operation * parent;
 };

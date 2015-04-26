@@ -11,7 +11,7 @@ using namespace std;
 class Declaration : public SimpleOperation {
 public:
 
-    string generate(SpimCodeContainer * spimCode) {
+    void generate(SpimCodeContainer * spimCode) {
         stringstream ss;
 
 

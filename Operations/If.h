@@ -6,7 +6,7 @@
 class If : public ComplexOperation {
 public:
 
-    string generate(SpimCodeContainer * spimCode) {
+    void generate(SpimCodeContainer * spimCode) {
 
     }
 

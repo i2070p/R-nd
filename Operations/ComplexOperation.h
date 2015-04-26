@@ -9,7 +9,7 @@ public:
 
     }
     
-    virtual string generate(SpimCodeContainer * spimCode) = 0;
+    virtual void generate(SpimCodeContainer * spimCode) = 0;
 
     void add(Operation *opr) {
         this->children.push_front(opr);

@@ -11,12 +11,15 @@ using namespace std;
 class Expression : public SimpleOperation {
 public:
 
-    string generate(SpimCodeContainer * spimCode) {
-        Element * tmp = NULL;
-        while (!this->elements.isEmpty()) {
-            tmp = this->elements.pop();
-            if (dynamic_cast<SignElement *> (tmp)) {
-                compute((SignElement*) tmp, spimCode);
+    void generate(SpimCodeContainer * spimCode) {
+        bool change = true;
+        while (change) {
+            change = false;
+            for (int i = 0; i<this->elements.size(); i++) {
+                if (dynamic_cast<SignElement *> (this->elements.at(i))) {
+                    compute((SignElement*) this->elements.getAndErase(i), spimCode);
+                    change = true;
+                }
             }
         }
     }
@@ -25,15 +28,15 @@ public:
         stringstream sTmp;
         stringstream line;
 
-        Element* first = this->elements.pop();
-        Element* second = this->elements.pop();
+        Element* first = this->elements.pop_front();
+        Element* second = this->elements.pop_front();
 
         sTmp << "$tmp" << spimCode->nextTmp();
-        line << "l" << (dynamic_cast<IntElement *> (first) ? "i" : "w") << " $t0, " << first->toString();
+        line << "l" << (ElementUtilities::isInt(first) ? "i" : "w") << " $t0, " << first->toString();
         spimCode->addOperation(line.str());
         line.str("");
 
-        line << "l" << (dynamic_cast<IntElement *> (second) ? "i" : "w") << " $t1, " << second->toString();
+        line << "l" << (ElementUtilities::isInt(second) ? "i" : "w") << " $t1, " << second->toString();
         spimCode->addOperation(line.str());
         line.str("");
 
@@ -47,7 +50,11 @@ public:
 
         spimCode->addVariable(sTmp.str(), ".word");
 
-        this->elements.push(ElementFactory::createElement(sTmp.str()));
+        this->elements.push_front(ElementFactory::createElement(sTmp.str()));
+    }
+
+    Element * getValueLiteral() {
+        return this->elements.pop();
     }
 
     Expression(Operation * parent) : SimpleOperation(parent) {

@@ -12,7 +12,7 @@
 #include <map> 
 #define INFILE_ERROR 1  
 #define OUTFILE_ERROR 2
- 
+    
 extern "C" int yylex();
 extern "C" int yyerror(const char *msg, ...);
 
@@ -21,7 +21,7 @@ using namespace std;
 
 ofstream trojki;
 ofstream spim;
-
+ 
 Builder builder;
 
 %}
@@ -52,7 +52,7 @@ Builder builder;
 %token BREAK
 %token GT
 %token V_TRUE
-%token V_FALSE
+%token V_FALSE  
 %token V_NIL
 %token RUNNER
 %token BEGIN_BLOCK
@@ -73,7 +73,7 @@ Builder builder;
 %left '+' '-'  
 %left '*' '/'
 %start begin  
-  
+   
 %%
 
 begin  
@@ -91,7 +91,7 @@ line
     :declaration ';' { builder.addExpressionToSimpleOperation(); }
     |assignment ';' { builder.addExpressionToSimpleOperation(); }
     |if_opr block { builder.endIf();
-    }
+    }  
     |if_opr block if_else_opr block {
         builder.endIf();
     }
@@ -99,19 +99,19 @@ line
 
 block 
     : BEGIN_BLOCK lines END_BLOCK { }
-    | line { }
-
+    | line { }    
+     
 if_opr
     : O_IF '(' condition ')' { builder.startIf(); }
 
-if_else_opr
+if_else_opr      
     : ELSE {	
     builder.addElse();
 }
 
 condition
     : wyr condition_opr wyr {
-
+   
     }
 
 condition_opr

@@ -8,7 +8,7 @@ public:
     SimpleOperation(Operation* parent) : Operation(parent) {
     };
 
-    virtual string generate(SpimCodeContainer * spimCode) = 0;
+    virtual void generate(SpimCodeContainer * spimCode) = 0;
 };
 
 

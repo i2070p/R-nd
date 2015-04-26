@@ -13,7 +13,19 @@ using namespace std;
 class Assignment : public SimpleOperation {
 public:
 
-    string generate(SpimCodeContainer * spimCode) {
+    void generate(SpimCodeContainer * spimCode) {
+
+        this->exp->generate(spimCode);
+
+        Element * el = this->exp->getValueLiteral();
+
+        stringstream line;
+        line << "l" << (ElementUtilities::isInt(el)  ? "i" : "w") << " $t0" << ", " << el->toString();
+        spimCode->addOperation(line.str());
+        line.str("");
+        line << "sw " << "$t0" << ", " << this->var->toString();
+        spimCode->addOperation(line.str());
+        line.str("");
 
     }
 
