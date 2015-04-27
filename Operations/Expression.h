@@ -11,6 +11,34 @@ using namespace std;
 class Expression : public SimpleOperation {
 public:
 
+    Element * getValueLiteral() {
+        return this->elements.pop();
+    }
+
+    Expression(Operation * parent) : SimpleOperation(parent) {
+
+    }
+
+    Expression(Operation * parent, Element* element) : SimpleOperation(parent) {
+        this->elements.push(element);
+    }
+
+    void addElement(Element* element) {
+        this->elements.push(element);
+    }
+
+    string toString() {
+        stringstream ss;
+        ss << "Expression: ";
+        for (int i = 0; i < this->elements.size(); i++) {
+            ss << this->elements.at(i)->toString() << " ";
+        }
+        return ss.str();
+    }
+
+protected:
+    StackAdapter<Element*> elements;
+
     void generate(SpimCodeContainer * spimCode) {
         bool change = true;
         while (change) {
@@ -53,32 +81,5 @@ public:
         this->elements.push_front(ElementFactory::createElement(sTmp.str()));
     }
 
-    Element * getValueLiteral() {
-        return this->elements.pop();
-    }
-
-    Expression(Operation * parent) : SimpleOperation(parent) {
-
-    }
-
-    Expression(Operation * parent, Element* element) : SimpleOperation(parent) {
-        this->elements.push(element);
-    }
-
-    void addElement(Element* element) {
-        this->elements.push(element);
-    }
-
-    string toString() {
-        stringstream ss;
-        ss << "Expression: ";
-        for (int i = 0; i < this->elements.size(); i++) {
-            ss << this->elements.at(i)->toString() << " ";
-        }
-        return ss.str();
-    }
-
-protected:
-    StackAdapter<Element*> elements;
 };
 

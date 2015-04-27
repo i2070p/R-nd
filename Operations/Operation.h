@@ -13,7 +13,11 @@ public:
 
     }
 
-    virtual void generate(SpimCodeContainer* spimCode) = 0;
+    virtual void startGenerate(SpimCodeContainer* spimCode) {
+        this->beforeGenerate(spimCode);
+        this->generate(spimCode);
+        this->afterGenerate(spimCode);
+    }
 
     virtual Operation * getParent() {
         return this->parent;
@@ -25,6 +29,16 @@ public:
 
 protected:
     Operation * parent;
+
+    virtual void generate(SpimCodeContainer* spimCode) = 0;
+
+    virtual void beforeGenerate(SpimCodeContainer* spimCode) {
+
+    }
+
+    virtual void afterGenerate(SpimCodeContainer* spimCode) {
+
+    }
 };
 
 

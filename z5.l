@@ -88,7 +88,7 @@ downto      {
 [0-9]+\.[0-9]+	{
 				yylval.fval = atof(yytext);
 				return FLOAT;
-}	
+}	 
 
 \".*\"    		{
 				yylval.text = strdup(yytext);

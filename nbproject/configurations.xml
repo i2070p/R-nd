@@ -2,15 +2,25 @@
 <configurationDescriptor version="95">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <df root="." name="0">
+      <df name="Elements">
+        <in>ElementUtilities.h</in>
+      </df>
       <df name="Operations">
+        <in>Assignment.h</in>
+        <in>Block.h</in>
         <in>Builder.h</in>
         <in>ComplexOperation.h</in>
-        <in>ExpressionOperation.h</in>
-        <in>IfOperation.h</in>
+        <in>Condition.h</in>
+        <in>Declaration.h</in>
+        <in>Expression.h</in>
+        <in>If.h</in>
         <in>Operation.h</in>
+        <in>OperationContainer.h</in>
+        <in>Runner.h</in>
         <in>SimpleOperation.h</in>
-        <in>newClass.h</in>
+        <in>Types.h</in>
       </df>
+      <in>SpimCodeContainer.h</in>
       <in>def.tab.cc</in>
       <in>lex.yy.c</in>
     </df>
@@ -43,19 +53,35 @@
           <executablePath>leks</executablePath>
         </makeTool>
       </makefileType>
+      <item path="Elements/ElementUtilities.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Operations/Assignment.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Operations/Block.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Operations/Builder.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Operations/ComplexOperation.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Operations/ExpressionOperation.h" ex="false" tool="3" flavor2="0">
+      <item path="Operations/Condition.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Operations/IfOperation.h" ex="false" tool="3" flavor2="0">
+      <item path="Operations/Declaration.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Operations/Expression.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Operations/If.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Operations/Operation.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Operations/OperationContainer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Operations/Runner.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Operations/SimpleOperation.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Operations/newClass.h" ex="false" tool="3" flavor2="0">
+      <item path="Operations/Types.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SpimCodeContainer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="def.tab.cc" ex="false" tool="1" flavor2="0">
       </item>

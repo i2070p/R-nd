@@ -4,21 +4,21 @@
 #include <sstream>
 #include <stack>
 #include <vector>
-#include <string> 
+#include <string>   
 #include "StackAdapter.h"
-#include <iostream>
-#include "Elements/ElementFactory.h"
-#include "Operations/Builder.h"
-#include <map> 
-#define INFILE_ERROR 1  
-#define OUTFILE_ERROR 2
-    
+#include <iostream>   
+#include "Elements/ElementFactory.h" 
+#include "Operations/Builder.h"      
+#include <map>    
+#define INFILE_ERROR 1   
+#define OUTFILE_ERROR 2  
+     
 extern "C" int yylex();
 extern "C" int yyerror(const char *msg, ...);
 
 using namespace std;
-
-
+ 
+  
 ofstream trojki;
 ofstream spim;
  
@@ -38,7 +38,7 @@ Builder builder;
 %token LESS_EQUAL
 %token ASSIGNMENT
 %token B_XOR
-%token B_OR
+%token B_OR 
 %token B_AND
 %token B_NOT
 %token MOD
@@ -77,8 +77,11 @@ Builder builder;
 %%
 
 begin  
-    :RUNNER BEGIN_BLOCK lines END_BLOCK { builder.traverse(); cout << "beg\n";
+    :RUNNER BEGIN_BLOCK lines END_BLOCK { builder.startGenerate(); cout << "beg\n";
          
+    }
+    | '{' STR '}' {
+
     }
     ; 
  
@@ -92,35 +95,35 @@ line
     |assignment ';' { builder.addExpressionToSimpleOperation(); }
     |if_opr block { builder.endIf();
     }  
-    |if_opr block if_else_opr block {
-        builder.endIf();
-    }
-    ;
-
+    |if_opr block if_else_opr block { 
+        builder.endIf(); 
+    }   
+    ; 
+ 
 block 
-    : BEGIN_BLOCK lines END_BLOCK { }
-    | line { }    
-     
-if_opr
-    : O_IF '(' condition ')' { builder.startIf(); }
+    : BEGIN_BLOCK lines END_BLOCK { } 
+    | line { }     
+       
+if_opr 
+    : O_IF '(' condition ')' { builder.startIf(); } 
 
-if_else_opr      
+if_else_opr         
     : ELSE {	
     builder.addElse();
 }
-
+ 
 condition
-    : wyr condition_opr wyr {
-   
+    : fin_wyr condition_opr fin_wyr {
+        builder.buildCondition();
     }
-
-condition_opr
+ 
+condition_opr 
     :'=' {
-        builder.addToExpression(ElementFactory::createElement(EQUAL));
+        builder.addSignToCondition(ElementFactory::createElement(EQUAL));
     } 
 
 assignment 
-    :NAME ASSIGNMENT wyr {
+    :NAME ASSIGNMENT fin_wyr {
         builder.buildAssignment($1);
     }
     ;    
@@ -128,9 +131,9 @@ assignment
 declaration
     :NAME ':' type {
         builder.buildDeclaration($1);
-
+ 
     } 
-    |declaration ASSIGNMENT wyr {
+    |declaration ASSIGNMENT fin_wyr {
 	 
     }     
     ;
@@ -139,7 +142,12 @@ type
     :TYPE_INT {builder.setDataType(T_INT);}
     |TYPE_FLOAT {builder.setDataType(T_FLOAT);}
     ;    
-    
+  
+fin_wyr 
+    :wyr {
+        builder.finishExpression();
+    }
+  
 wyr
 	:wyr '+' skladnik	{
          builder.addToExpression(ElementFactory::createElement(ADDITION));
@@ -164,7 +172,7 @@ czynnik
 	|FLOAT			{builder.addToExpression(ElementFactory::createElement($1));}
 	|'(' wyr ')'		{}
 	;
-	
+	   
 %%  
 int main(int argc, char *argv[])
 {		

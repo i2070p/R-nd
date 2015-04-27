@@ -4,8 +4,8 @@
 
 using namespace std;
 
-string commands[4] = {
-    "div", "add", "sub", "mul"
+string commands[6] = {
+    "div", "add", "sub", "mul", "beq", "bne"
 };
 
 enum SignType {

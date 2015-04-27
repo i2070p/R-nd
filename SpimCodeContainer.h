@@ -34,6 +34,10 @@ public:
         return this->lbl++;
     }
     
+    void addLabel() {
+        this->operations << ":label" << this->lbl << endl;
+    }
+    
     string toString() {
         stringstream ss;
         ss << this->variables.str() << endl << operations.str() << endl;

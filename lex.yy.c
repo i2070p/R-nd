@@ -1057,7 +1057,7 @@ YY_RULE_SETUP
 {
 				yylval.fval = atof(yytext);
 				return FLOAT;
-}	
+}	 
 	YY_BREAK
 case 48:
 YY_RULE_SETUP

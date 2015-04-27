@@ -10,10 +10,6 @@ public:
 
     }
 
-    void generate(SpimCodeContainer * spimCode) {
-
-    }
-
     string toString() {
         stringstream ss;
         ss << "Block(" << this << ") {";
@@ -22,5 +18,10 @@ public:
         return ss.str();
     }
 
+protected:
+
+    void generate(SpimCodeContainer * spimCode) {
+        this->generateChildren(spimCode);
+    }
 };
 

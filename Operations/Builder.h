@@ -9,6 +9,7 @@
 #include "Assignment.h"
 #include "Runner.h"
 #include "Block.h"
+#include "Condition.h"
 #include "If.h"
 
 using namespace std;
@@ -34,13 +35,15 @@ public:
 
     void startIf() {
         If * newIf = new If(this->current);
-        newIf->addCondition(this->exp);
+        
+        newIf->addCondition(this->cond);
         
         this->current->add(newIf);
         this->current = newIf;
-        this->exp = NULL;
-        
-        this->startBlock();        
+
+        this->cond = NULL;
+
+        this->startBlock();
     }
 
     void addElse() {
@@ -51,6 +54,26 @@ public:
     void endIf() {
         this->endBlock();
         this->current = (ComplexOperation*)this->current->getParent();
+    }
+
+    void addSignToCondition(Element * sign) {
+
+        if (!this->cond) {
+            this->cond = new Condition(this->current);
+        }
+        this->cond->addSign((SignElement*) sign);
+
+    }
+
+    void buildCondition() {
+
+        if (!this->cond) {
+            this->cond = new Condition(this->current);
+        }
+
+        cond->addExpression(this->exps.pop());
+        cond->addExpression(this->exps.pop());
+
     }
 
     void addSimpleOperationToCurrentBlock() {
@@ -73,38 +96,27 @@ public:
         }
     }
 
-    void addExpressionToSimpleOperation() {
-        if (dynamic_cast<Declaration *> (this->currentSimple)) {
-            ((Declaration *)this->currentSimple)->addExpression(this->exp);
-        } else if (dynamic_cast<Assignment *> (this->currentSimple)) {
-            ((Assignment *)this->currentSimple)->addExpression(this->exp);
+    void finishExpression() {
+        if (this->exp) {
+            this->exps.push(this->exp);
+            this->exp = NULL;
         }
+    }
 
-        this->exp = NULL;
+    void addExpressionToSimpleOperation() {
+        if (!this->exps.isEmpty()) {
+            Expression * exp = this->exps.pop();
+            if (dynamic_cast<Declaration *> (this->currentSimple)) {
+                ((Declaration *)this->currentSimple)->addExpression(exp);
+            } else if (dynamic_cast<Assignment *> (this->currentSimple)) {
+                ((Assignment *)this->currentSimple)->addExpression(exp);
+            }
+        }
         this->addSimpleOperationToCurrentBlock();
     }
 
-    void traverse() {
-        StackAdapter<Operation*> stack;
-        stack.push(this->runner);
-        Operation * tmp;
-        ComplexOperation * cTmp;
-        while (!stack.isEmpty()) {
-            tmp = stack.pop();
-            
-            tmp->generate(&this->spimCode);
-            //cout << tmp->toString() << endl;
-
-            if (dynamic_cast<ComplexOperation *> (tmp)) {
-                cTmp = (ComplexOperation*) tmp;
-
-                for (int i = 0; i < cTmp->getChildren().size(); i++) {
-                    stack.push(cTmp->getChild(i));
-                }
-            }
-        }
-        
-        
+    void startGenerate() {
+        this->runner->startGenerate(&this->spimCode);
         cout << this->spimCode.toString();
     }
 
@@ -117,9 +129,12 @@ protected:
     StackAdapter<Operation*> ready;
     Types dataType;
 
-    Expression* exp;
-
+    StackAdapter<Expression*> exps;
+    Expression * exp;
     ComplexOperation * current, * runner;
+
+    Condition * cond;
+
     SimpleOperation * currentSimple;
     SpimCodeContainer spimCode;
 };
