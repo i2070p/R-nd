@@ -2,6 +2,8 @@
 
 #include <sstream>
 
+#include "StackAdapter.h"
+
 using namespace std;
 
 class SpimCodeContainer {
@@ -31,12 +33,21 @@ public:
     }
     
     int nextLabel() {
-        return this->lbl++;
+        this->labels.push(++this->lbl);
+        return this->lbl;
     }
-    
-    void addLabel() {
-        this->operations << ":label" << this->lbl << endl;
+
+    int currentLabel() {
+        return this->labels.pop();
     }
+
+    void addLabel(bool inc) { 
+        if (inc) {
+            this->nextLabel();
+        }
+        this->operations << ":label" << this->currentLabel() << endl;
+    }
+
     
     string toString() {
         stringstream ss;
@@ -46,6 +57,7 @@ public:
 
 protected:
     stringstream variables, operations;
+    StackAdapter<int> labels;
     int tmp, adr, lbl;
 };
 

@@ -45,7 +45,7 @@ protected:
     }
 
     void afterGenerate(SpimCodeContainer* spimCode) {
-        spimCode->addLabel();
+        spimCode->addLabel(false);
     }
 };
 
