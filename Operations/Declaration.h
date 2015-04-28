@@ -50,7 +50,7 @@ protected:
             line << "sw " << "$t0" << ", " << this->var->toString();
             spimCode->addOperation(line.str());
         }
-        spimCode->addVariable(this->var->toString(), ".word");
+        spimCode->addVariable(this->var->toString(), ".word 1");
 
     }
 };

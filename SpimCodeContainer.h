@@ -41,6 +41,10 @@ public:
         return this->labels.pop();
     }
 
+    int getLabel() {
+        return this->lbl;
+    }    
+    
     void addLabel(bool inc) { 
         if (inc) {
             this->nextLabel();

@@ -36,12 +36,10 @@ public:
     void startIf() {
         If * newIf = new If(this->current);
         
-        newIf->addCondition(this->cond);
+        newIf->addCondition(this->exps.pop());
         
         this->current->add(newIf);
         this->current = newIf;
-
-        this->cond = NULL;
 
         this->startBlock();
     }
@@ -54,26 +52,6 @@ public:
     void endIf() {
         this->endBlock();
         this->current = (ComplexOperation*)this->current->getParent();
-    }
-
-    void addSignToCondition(Element * sign) {
-
-        if (!this->cond) {
-            this->cond = new Condition(this->current);
-        }
-        this->cond->addSign((SignElement*) sign);
-
-    }
-
-    void buildCondition() {
-
-        if (!this->cond) {
-            this->cond = new Condition(this->current);
-        }
-
-        cond->addExpression(this->exps.pop());
-        cond->addExpression(this->exps.pop());
-
     }
 
     void addSimpleOperationToCurrentBlock() {
@@ -132,8 +110,6 @@ protected:
     StackAdapter<Expression*> exps;
     Expression * exp;
     ComplexOperation * current, * runner;
-
-    Condition * cond;
 
     SimpleOperation * currentSimple;
     SpimCodeContainer spimCode;

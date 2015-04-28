@@ -105,26 +105,16 @@ block
     | line { }     
        
 if_opr 
-    : O_IF '(' condition ')' { builder.startIf(); } 
+    : O_IF '(' fin_expr ')' { builder.startIf(); } 
 
 if_else_opr         
     : ELSE {	
     builder.addElse();
 }
- 
-condition
-    : fin_wyr condition_opr fin_wyr {
-        builder.buildCondition();
-    }
- 
-condition_opr 
-    :'=' {
-        builder.addSignToCondition(ElementFactory::createElement(EQUAL));
-    } 
 
 assignment 
-    :NAME ASSIGNMENT fin_wyr {
-        builder.buildAssignment($1);
+    :NAME ASSIGNMENT fin_expr {
+        builder.buildAssignment($1); 
     }
     ;    
 
@@ -133,7 +123,7 @@ declaration
         builder.buildDeclaration($1);
  
     } 
-    |declaration ASSIGNMENT fin_wyr {
+    |declaration ASSIGNMENT fin_expr {
 	 
     }     
     ;
@@ -143,34 +133,72 @@ type
     |TYPE_FLOAT {builder.setDataType(T_FLOAT);}
     ;    
   
-fin_wyr 
-    :wyr {
-        builder.finishExpression();
-    }
+fin_expr 
+        :logic_expr             {
+            builder.finishExpression();
+        }
+        ;
+
+logic_expr 
+        :logic_expr '=' expr    {
+            builder.addToExpression(ElementFactory::createElement(EQUAL));      
+        }
+        |logic_expr '>' expr    {
+            builder.addToExpression(ElementFactory::createElement(GREATERTHAN));      
+        }
+        |logic_expr '<' expr    {
+            builder.addToExpression(ElementFactory::createElement(LESSTHAN));      
+        }
+        |logic_expr NOT_EQUAL expr     {
+            builder.addToExpression(ElementFactory::createElement(NOTEQUAL));      
+        }
+        |logic_expr GREATER_EQUAL expr     {
+            builder.addToExpression(ElementFactory::createElement(GREATEREQUAL));      
+        }
+        |logic_expr LESS_EQUAL expr     {
+            builder.addToExpression(ElementFactory::createElement(LESSEQUAL));      
+        }
+        |expr                   {
+
+        }  
+        ;
+     
+expr 
+	:expr '+' skladnik	{ 
+            builder.addToExpression(ElementFactory::createElement(ADDITION));
+        }
+	|expr '-' skladnik	{  
+            builder.addToExpression(ElementFactory::createElement(SUBTRACTION)); 
+        }
+	|skladnik		{
+        
+        }
+	;
   
-wyr
-	:wyr '+' skladnik	{
-         builder.addToExpression(ElementFactory::createElement(ADDITION));
-    }
-	|wyr '-' skladnik	{  
-      builder.addToExpression(ElementFactory::createElement(SUBTRACTION)); 
-    }
-	|skladnik		{}
-	;  
 skladnik    
 	:skladnik '*' czynnik	{
-builder.addToExpression(ElementFactory::createElement(MULTIPLICATION));
-    }
+            builder.addToExpression(ElementFactory::createElement(MULTIPLICATION));
+        }
 	|skladnik '/' czynnik	{  
-builder.addToExpression(ElementFactory::createElement(DIVISION));
-    }
-	|czynnik		{}
+            builder.addToExpression(ElementFactory::createElement(DIVISION));
+        }
+	|czynnik		{
+        
+        }
 	; 
 czynnik  
-	:NAME			{builder.addToExpression(ElementFactory::createElement($1));} 
-	|INTEGER		{builder.addToExpression(ElementFactory::createElement($1));}
-	|FLOAT			{builder.addToExpression(ElementFactory::createElement($1));}
-	|'(' wyr ')'		{}
+	:NAME			{
+            builder.addToExpression(ElementFactory::createElement($1));
+        } 
+	|INTEGER		{
+            builder.addToExpression(ElementFactory::createElement($1));
+        }
+	|FLOAT			{
+            builder.addToExpression(ElementFactory::createElement($1));
+        }
+	|'(' expr ')'		{
+        
+        }
 	;
 	   
 %%  

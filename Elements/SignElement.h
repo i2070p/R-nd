@@ -4,8 +4,8 @@
 
 using namespace std;
 
-string commands[6] = {
-    "div", "add", "sub", "mul", "beq", "bne"
+string commands[10] = {
+    "div", "add", "sub", "mul", "seq", "sne", "sgt", "sle", "slt", "sge"
 };
 
 enum SignType {
@@ -15,10 +15,10 @@ enum SignType {
     MULTIPLICATION,
     EQUAL,
     NOTEQUAL,
-    LESSTHAN,
-    LESSEQUAL,
     GREATERTHAN,
-    GREATEREQUAL
+    LESSEQUAL,
+    LESSTHAN,
+    GREATEREQUAL,
 };
 
 class SignElement : public LiteralElement<SignType> {
@@ -26,7 +26,7 @@ public:
 
     SignElement(SignType value) : LiteralElement(value) {
     }
-    
+
     string getCommand() {
         return commands[this->getValue()];
     }

@@ -41,23 +41,25 @@ protected:
 
     void generate(SpimCodeContainer * spimCode) {
         bool change = true;
+
         while (change) {
             change = false;
             for (int i = 0; i<this->elements.size(); i++) {
                 if (dynamic_cast<SignElement *> (this->elements.at(i))) {
-                    compute((SignElement*) this->elements.getAndErase(i), spimCode);
+                    compute((SignElement*) this->elements.getAndErase(i), spimCode, i);
                     change = true;
+                    break;
                 }
             }
         }
     }
 
-    void compute(SignElement * sign, SpimCodeContainer * spimCode) {
+    void compute(SignElement * sign, SpimCodeContainer * spimCode, int i) {
         stringstream sTmp;
         stringstream line;
 
-        Element* first = this->elements.pop_front();
-        Element* second = this->elements.pop_front();
+        Element* first = this->elements.getAndErase(i - 1);
+        Element* second = this->elements.getAndErase(i - 2);
 
         sTmp << "$tmp" << spimCode->nextTmp();
         line << "l" << (ElementUtilities::isInt(first) ? "i" : "w") << " $t0, " << first->toString();
@@ -76,7 +78,7 @@ protected:
         spimCode->addOperation(line.str());
         line.str("");
 
-        spimCode->addVariable(sTmp.str(), ".word");
+        spimCode->addVariable(sTmp.str(), ".word 1");
 
         this->elements.push_front(ElementFactory::createElement(sTmp.str()));
     }
