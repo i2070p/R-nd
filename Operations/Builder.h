@@ -49,6 +49,16 @@ public:
         this->startBlock();
     }
 
+    void startWhile() {
+        cout << "startwhile" << endl;
+    }    
+    
+    
+    void endWhile() {
+        cout << "stopwhile" << endl;
+    }    
+    
+    
     void endIf() {
         this->endBlock();
         this->current = (ComplexOperation*)this->current->getParent();

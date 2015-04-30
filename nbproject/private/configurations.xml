@@ -29,6 +29,7 @@
       </df>
       <in>SpimCodeContainer.h</in>
       <in>StackAdapter.h</in>
+      <in>Toolkit.h</in>
       <in>def.tab.cc</in>
       <in>def.tab.hh</in>
       <in>lex.yy.c</in>

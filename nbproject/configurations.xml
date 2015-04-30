@@ -21,6 +21,7 @@
         <in>Types.h</in>
       </df>
       <in>SpimCodeContainer.h</in>
+      <in>Toolkit.h</in>
       <in>def.tab.cc</in>
       <in>lex.yy.c</in>
     </df>
@@ -82,6 +83,8 @@
       <item path="Operations/Types.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SpimCodeContainer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Toolkit.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="def.tab.cc" ex="false" tool="1" flavor2="0">
       </item>

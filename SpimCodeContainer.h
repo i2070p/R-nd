@@ -31,28 +31,19 @@ public:
     int nextAdr() {
         return this->adr++;
     }
-    
+
     int nextLabel() {
-        this->labels.push(++this->lbl);
-        return this->lbl;
+        return ++this->lbl;
     }
 
-    int currentLabel() {
-        return this->labels.pop();
+    void addLabel(int id) {
+        this->operations << "label" << id << ":" << endl;
     }
 
-    int getLabel() {
-        return this->lbl;
-    }    
-    
-    void addLabel(bool inc) { 
-        if (inc) {
-            this->nextLabel();
-        }
-        this->operations << ":label" << this->currentLabel() << endl;
+    void addLabel() {
+        this->addLabel(this->lbl);
     }
 
-    
     string toString() {
         stringstream ss;
         ss << this->variables.str() << endl << operations.str() << endl;
@@ -61,7 +52,6 @@ public:
 
 protected:
     stringstream variables, operations;
-    StackAdapter<int> labels;
     int tmp, adr, lbl;
 };
 

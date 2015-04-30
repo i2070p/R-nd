@@ -4,13 +4,13 @@
 #include <sstream>
 #include <stack>
 #include <vector>
-#include <string>   
+#include <string>    
 #include "StackAdapter.h"
-#include <iostream>   
-#include "Elements/ElementFactory.h" 
+#include <iostream>       
+#include "Elements/ElementFactory.h"   
 #include "Operations/Builder.h"      
 #include <map>    
-#define INFILE_ERROR 1   
+#define INFILE_ERROR 1    
 #define OUTFILE_ERROR 2  
      
 extern "C" int yylex();
@@ -95,6 +95,10 @@ line
     |assignment ';' { builder.addExpressionToSimpleOperation(); }
     |if_opr block { builder.endIf();
     }  
+
+    |while_opr block { builder.endWhile(); 
+    }
+    
     |if_opr block if_else_opr block { 
         builder.endIf(); 
     }   
@@ -103,6 +107,10 @@ line
 block 
     : BEGIN_BLOCK lines END_BLOCK { } 
     | line { }     
+
+while_opr
+    : WHILE '(' fin_expr ')' { builder.startWhile(); }
+
        
 if_opr 
     : O_IF '(' fin_expr ')' { builder.startIf(); } 
