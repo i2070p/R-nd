@@ -30,10 +30,6 @@ public:
 protected:
     Expression *condition;
 
-    void beforeGenerate(SpimCodeContainer* spimCode) {
-
-    }
-
     void generate(SpimCodeContainer * spimCode) {
         stringstream line;
 

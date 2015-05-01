@@ -11,6 +11,7 @@
 #include "Block.h"
 #include "Condition.h"
 #include "If.h"
+#include "While.h"
 
 using namespace std;
 
@@ -50,12 +51,20 @@ public:
     }
 
     void startWhile() {
-        cout << "startwhile" << endl;
+        While * newWhile = new While(this->current);
+        
+        newWhile->addCondition(this->exps.pop());
+        
+        this->current->add(newWhile);
+        this->current = newWhile;
+
+        this->startBlock();
     }    
     
     
     void endWhile() {
-        cout << "stopwhile" << endl;
+        this->endBlock();
+        this->current = (ComplexOperation*)this->current->getParent();
     }    
     
     

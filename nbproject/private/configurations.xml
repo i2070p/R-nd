@@ -26,6 +26,7 @@
         <in>Runner.h</in>
         <in>SimpleOperation.h</in>
         <in>Types.h</in>
+        <in>While.h</in>
       </df>
       <in>SpimCodeContainer.h</in>
       <in>StackAdapter.h</in>

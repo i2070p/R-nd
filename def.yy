@@ -15,7 +15,7 @@
      
 extern "C" int yylex();
 extern "C" int yyerror(const char *msg, ...);
-
+ 
 using namespace std;
  
     
@@ -86,9 +86,9 @@ begin
     ; 
  
 lines   
-    :lines line {}
+    :lines line {} 
     |line {}   
-    ; 
+    ;  
   
 line
     :declaration ';' { builder.addExpressionToSimpleOperation(); }
