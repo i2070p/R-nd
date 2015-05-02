@@ -59,6 +59,10 @@ float             {
                 return TYPE_FLOAT;                          
 }
 
+string            {
+                return TYPE_STR;                          
+}
+
 runner {
 	return RUNNER;
 }

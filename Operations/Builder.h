@@ -4,7 +4,7 @@
 #include "Expression.h"
 #include <typeinfo>
 #include <sstream>
-#include "Types.h"
+#include "Type.h"
 #include "Declaration.h"
 #include "Assignment.h"
 #include "Runner.h"
@@ -36,9 +36,9 @@ public:
 
     void startIf() {
         If * newIf = new If(this->current);
-        
+
         newIf->addCondition(this->exps.pop());
-        
+
         this->current->add(newIf);
         this->current = newIf;
 
@@ -52,22 +52,20 @@ public:
 
     void startWhile() {
         While * newWhile = new While(this->current);
-        
+
         newWhile->addCondition(this->exps.pop());
-        
+
         this->current->add(newWhile);
         this->current = newWhile;
 
         this->startBlock();
-    }    
-    
-    
+    }
+
     void endWhile() {
         this->endBlock();
         this->current = (ComplexOperation*)this->current->getParent();
-    }    
-    
-    
+    }
+
     void endIf() {
         this->endBlock();
         this->current = (ComplexOperation*)this->current->getParent();
@@ -78,7 +76,7 @@ public:
     }
 
     void buildDeclaration(string name) {
-        this->currentSimple = new Declaration(this->current, new NameElement(name), this->dataType);
+        this->currentSimple = new Declaration(this->current, new NameElement(name), new Type(this->dataType));
     }
 
     void buildAssignment(string name) {
@@ -113,7 +111,11 @@ public:
     }
 
     void startGenerate() {
-        this->runner->startGenerate(&this->spimCode);
+        try {
+            this->runner->startGenerate(&this->spimCode);
+        } catch (string e) {
+            cout << e << endl;
+        }
         cout << this->spimCode.toString();
     }
 

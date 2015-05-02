@@ -19,7 +19,7 @@ public:
     
     string toString() {
         stringstream ss;
-        ss << value;        
+        ss << this->value;        
         return ss.str();        
     }
     

@@ -18,10 +18,11 @@
         <in>OperationContainer.h</in>
         <in>Runner.h</in>
         <in>SimpleOperation.h</in>
-        <in>Types.h</in>
+        <in>Type.h</in>
         <in>While.h</in>
       </df>
       <in>SpimCodeContainer.h</in>
+      <in>ToString.h</in>
       <in>Toolkit.h</in>
       <in>def.tab.cc</in>
       <in>lex.yy.c</in>
@@ -81,11 +82,13 @@
       </item>
       <item path="Operations/SimpleOperation.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="Operations/Types.h" ex="false" tool="3" flavor2="0">
+      <item path="Operations/Type.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Operations/While.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SpimCodeContainer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ToString.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Toolkit.h" ex="false" tool="3" flavor2="0">
       </item>

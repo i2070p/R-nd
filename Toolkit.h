@@ -1,15 +1,13 @@
 #pragma once
 
-#include<stdarg.h>
+#include <stdarg.h>
 
 using namespace std;
 
 class Toolkit {
 public:
 
-    static string isInt(Element * element) {
 
-    }
 
 private:
 

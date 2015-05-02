@@ -9,12 +9,6 @@ public:
     Runner() : ComplexOperation(NULL) {
 
     }
-
-    string toString() {
-        stringstream ss;
-        ss << "This is Runner(" << this << ")";
-        return ss.str();
-    }
     
 protected:
 

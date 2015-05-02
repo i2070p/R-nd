@@ -1,0 +1,5 @@
+runner <<
+
+    a : float <- 45.44;
+    k : int <- a;
+>>

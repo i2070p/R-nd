@@ -10,11 +10,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/meti/Zut/kompilatory/R@nd/z5/Operations/While.h</file>
-            <file>file:/home/meti/Zut/kompilatory/R@nd/z5/def.yy</file>
-            <file>file:/home/meti/Zut/kompilatory/R@nd/z5/Operations/If.h</file>
-            <file>file:/home/meti/Zut/kompilatory/R@nd/z5/prog.txt</file>
-            <file>file:/home/meti/Zut/kompilatory/R@nd/z5/Operations/Builder.h</file>
+            <file>file:/home/meti/Zut/kompilatory/R@nd/z5/Toolkit.h</file>
+            <file>file:/home/meti/Zut/kompilatory/R@nd/z5/Operations/Runner.h</file>
+            <file>file:/home/meti/Zut/kompilatory/R@nd/z5/SpimCodeContainer.h</file>
+            <file>file:/home/meti/Zut/kompilatory/R@nd/z5/Operations/Declaration.h</file>
+            <file>file:/home/meti/Zut/kompilatory/R@nd/z5/Operations/Condition.h</file>
         </group>
     </open-files>
 </project-private>

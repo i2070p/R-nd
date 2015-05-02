@@ -64,12 +64,13 @@
      TYPE_INT = 282,
      TYPE_FLOAT = 283,
      TYPE_VOID = 284,
-     TO = 285,
-     DOWNTO = 286,
-     STR = 287,
-     INTEGER = 288,
-     FLOAT = 289,
-     NAME = 290
+     TYPE_STR = 285,
+     TO = 286,
+     DOWNTO = 287,
+     STR = 288,
+     INTEGER = 289,
+     FLOAT = 290,
+     NAME = 291
    };
 #endif
 
@@ -89,7 +90,7 @@ typedef union YYSTYPE
 
 
 /* Line 2068 of yacc.c  */
-#line 93 "def.tab.hh"
+#line 94 "def.tab.hh"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

@@ -3,7 +3,8 @@
 #include "../SpimCodeContainer.h"
 #include "../Elements/ElementUtilities.h"
 #include <sstream>
-
+#include "../Toolkit.h"
+#include "Type.h"
 using namespace std;
 
 class Operation {
