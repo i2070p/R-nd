@@ -1575,7 +1575,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 119 "def.yy"
     {	
-    builder.addElse();
+    builder.addElse();   
 }
     break;
 
@@ -1583,8 +1583,8 @@ yyreduce:
 
 /* Line 1806 of yacc.c  */
 #line 124 "def.yy"
-    {
-        builder.buildAssignment((yyvsp[(1) - (3)].text)); 
+    { 
+        builder.buildAssignment((yyvsp[(1) - (3)].text));  
     }
     break;
 
@@ -1593,7 +1593,7 @@ yyreduce:
 /* Line 1806 of yacc.c  */
 #line 130 "def.yy"
     {
-        builder.buildDeclaration((yyvsp[(1) - (3)].text));
+        builder.buildDeclaration((yyvsp[(1) - (3)].text)); 
  
     }
     break;

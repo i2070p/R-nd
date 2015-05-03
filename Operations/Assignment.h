@@ -26,16 +26,14 @@ protected:
     NameElement * var;
 
     void generate(SpimCodeContainer * spimCode) {
-
-        this->exp->startGenerate(spimCode);
-
-        Element * el = this->exp->getValueLiteral();
-
         stringstream line;
-        this->exp->startGenerate(spimCode);
-        Element * el = this->exp->getValueLiteral();
 
-        if (this->type->is(T_INT)) {
+        this->exp->startGenerate(spimCode);
+
+        Element * el = this->exp->getValueLiteral();
+        Type * type2 = spimCode->getVariable(this->var->toString());
+       
+        if (type2->is(T_INT)) {
             if (ElementUtilities::isInt(el)) {
                 line << "li" << " $t0" << ", " << el->toString() << endl;
                 line << "sw " << "$t0" << ", " << this->var->toString();
@@ -48,7 +46,6 @@ protected:
                 Type * type = spimCode->getVariable(el->toString());
 
                 if (type) {
-                    cout << el->toString() << endl;
                     if (type->is(T_INT)) {
                         line << "lw" << " $t0" << ", " << el->toString() << endl;
                         line << "sw " << "$t0" << ", " << this->var->toString();
@@ -63,7 +60,7 @@ protected:
                 }
             }
 
-        } else if (this->type->is(T_FLOAT)) {
+        } else if (type2->is(T_FLOAT)) {
 
             if (ElementUtilities::isInt(el)) {
                 line << "li $t0, " << el->toString() << endl;
@@ -84,8 +81,7 @@ protected:
                         line << "cvt.s.w $f0, $f0" << endl;
                         line << "s.s " << "$f0" << ", " << this->var->toString();
                     } else if (type->is(T_FLOAT)) {
-                        string tmp = spimCode->addTmpFloatVar(el->toString());
-                        line << "l.s" << " $f0" << ", " << tmp << endl;
+                        line << "l.s" << " $f0" << ", " << el->toString() << endl;
                         line << "s.s " << "$f0" << ", " << this->var->toString();
                     }
                 } else {
@@ -94,5 +90,5 @@ protected:
             }
         }
         spimCode->addOperation(line.str());
-    };
-
+    }
+};

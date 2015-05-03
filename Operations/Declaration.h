@@ -43,8 +43,8 @@ protected:
                     line << "sw " << "$t0" << ", " << this->var->toString();
                 } else if (ElementUtilities::isName(el)) {
                     Type * type = spimCode->getVariable(el->toString());
-                    
-                    if (type) {cout << el->toString() << endl;
+
+                    if (type) {
                         if (type->is(T_INT)) {
                             line << "lw" << " $t0" << ", " << el->toString() << endl;
                             line << "sw " << "$t0" << ", " << this->var->toString();
@@ -80,8 +80,7 @@ protected:
                             line << "cvt.s.w $f0, $f0" << endl;
                             line << "s.s " << "$f0" << ", " << this->var->toString();
                         } else if (type->is(T_FLOAT)) {
-                            string tmp = spimCode->addTmpFloatVar(el->toString());
-                            line << "l.s" << " $f0" << ", " << tmp << endl;
+                            line << "l.s" << " $f0" << ", " << el->toString() << endl;
                             line << "s.s " << "$f0" << ", " << this->var->toString();
                         }
                     } else {

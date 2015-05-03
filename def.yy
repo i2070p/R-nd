@@ -115,20 +115,20 @@ while_opr
 if_opr 
     : O_IF '(' fin_expr ')' { builder.startIf(); } 
 
-if_else_opr         
+if_else_opr          
     : ELSE {	
-    builder.addElse();
-}
+    builder.addElse();   
+} 
 
-assignment 
-    :NAME ASSIGNMENT fin_expr {
-        builder.buildAssignment($1); 
-    }
+assignment   
+    :NAME ASSIGNMENT fin_expr { 
+        builder.buildAssignment($1);  
+    }     
     ;    
 
 declaration
     :NAME ':' type {
-        builder.buildDeclaration($1);
+        builder.buildDeclaration($1); 
  
     } 
     |declaration ASSIGNMENT fin_expr {
