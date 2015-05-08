@@ -11,6 +11,8 @@ public:
 
     SpimCodeContainer() {
         this->variables << ".data" << endl;
+        this->addVariable("$f_one", new Type(T_FLOAT), 1.0);
+        this->addVariable("$f_zero", new Type(T_FLOAT), 0.0);
         this->operations << ".text" << endl;
         this->tmp = 0;
         this->adr = 0;
@@ -39,7 +41,7 @@ public:
 
     void addVariable(string name, Type * type) {
         this->vars.insert(pair<string, Type*>(name, type));
-        this->variables << name << ": " << type->toString() << endl;
+        this->variables << name << ": " << type->toString() << " 0" << endl;
     }
 
     void addOperation(string operation) {

@@ -86,7 +86,7 @@ extern "C" int yylex();
 extern "C" int yyerror(const char *msg, ...);
   
 using namespace std;
- 
+  
     
 ofstream trojki;
 ofstream spim;

@@ -22,6 +22,7 @@
         <in>While.h</in>
       </df>
       <in>SpimCodeContainer.h</in>
+      <in>Strings.h</in>
       <in>ToString.h</in>
       <in>Toolkit.h</in>
       <in>def.tab.cc</in>
@@ -87,6 +88,8 @@
       <item path="Operations/While.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="SpimCodeContainer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Strings.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ToString.h" ex="false" tool="3" flavor2="0">
       </item>

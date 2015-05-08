@@ -25,16 +25,11 @@ protected:
         spimCode->addLabel(labelUp);
 
         this->condition->startGenerate(spimCode);
-
-        line << "li $t0, 0";
-        spimCode->addOperation(line.str());
-        line.str("");
-
-        line << "lw $t1, " << this->condition->getValueLiteral()->toString();
-        spimCode->addOperation(line.str());
-        line.str("");
-
-        line << "bne $t0, $t1, label" << labelDown;
+        Element el = this->condition->getValueLiteral();
+        if (el->)
+        line << "li $t0, 0" << endl;
+        line << "lw $t1, " << this->condition->getValueLiteral()->toString() << endl;
+        line << "bne $t0, $t1, label" << labelDown << endl;
         
         spimCode->addOperation(line.str());
         line.str("");

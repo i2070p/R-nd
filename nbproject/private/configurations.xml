@@ -13,6 +13,8 @@
         <in>SignElement.h</in>
       </df>
       <df name="Operations">
+        <df name="Exceptions">
+        </df>
         <in>Assignment.h</in>
         <in>Block.h</in>
         <in>Builder.h</in>
@@ -30,6 +32,7 @@
       </df>
       <in>SpimCodeContainer.h</in>
       <in>StackAdapter.h</in>
+      <in>Strings.h</in>
       <in>ToString.h</in>
       <in>Toolkit.h</in>
       <in>def.tab.cc</in>
