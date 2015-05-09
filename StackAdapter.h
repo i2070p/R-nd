@@ -29,6 +29,10 @@ public:
         return result;
     }
 
+    void insert(T el, int i) {
+        st.insert(st.begin() + i, el);
+    }
+
     void push(T el) {
         st.push_back(el);
     }

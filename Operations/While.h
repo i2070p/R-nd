@@ -25,12 +25,29 @@ protected:
         spimCode->addLabel(labelUp);
 
         this->condition->startGenerate(spimCode);
-        Element el = this->condition->getValueLiteral();
-        if (el->)
+        Element * el = this->condition->getValueLiteral();
+
         line << "li $t0, 0" << endl;
-        line << "lw $t1, " << this->condition->getValueLiteral()->toString() << endl;
-        line << "bne $t0, $t1, label" << labelDown << endl;
-        
+
+        if (ElementUtilities::isInt(el)) {
+            line << "li $t1, " << el->toString() << endl;
+        } else if (ElementUtilities::isFloat(el)) {
+            string tmp = spimCode->addTmpFloatVar(el->toString());
+            this->generateConditionForFloat(line, tmp);
+            
+        } else if (ElementUtilities::isName(el)) {
+            Type * type = spimCode->getVariable(el->toString());
+            if (type) {
+                if (type->is(T_INT)) {
+                    line << "lw" << " $t1" << ", " << el->toString() << endl;
+                } else if (type->is(T_FLOAT)) {
+                    this->generateConditionForFloat(line, el->toString());
+                }
+            }
+        }
+
+        line << "beq $t0, $t1, label" << labelDown << endl;
+
         spimCode->addOperation(line.str());
         line.str("");
 
@@ -44,5 +61,17 @@ protected:
 
     }
 
+private:
+
+    void generateConditionForFloat(stringstream & line, string el) {
+        line << "l.s $f0, " << el << endl;
+        line << "l.s $f2, $f_one" << endl;
+        line << "l.s $f3, $f_zero" << endl;
+        line << "c.eq.s $f0, $f3" << endl;
+        line << "movt.s $f2, $f3" << endl;
+        line << "mov.s $f0, $f2 " << endl;
+        line << "cvt.w.s $f0, $f0" << endl;
+        line << "mfc1 $t1, $f0" << endl;
+    }
 };
 

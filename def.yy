@@ -1,15 +1,15 @@
 %{
 #include <stdio.h>
 #include <fstream> 
-#include <sstream>
+#include <sstream> 
 #include <stack>    
 #include <vector>  
 #include <string>     
 #include "StackAdapter.h"
 #include <iostream>
 #include "Elements/ElementFactory.h"    
-#include "Operations/Builder.h"  
-#include <map>     
+#include "Operations/Builder.h"     
+#include <map>      
 #define INFILE_ERROR 1        
 #define OUTFILE_ERROR 2    
      
@@ -100,7 +100,7 @@ line
     }
     
     |if_opr block if_else_opr block {  
-        builder.endIf(); 
+        builder.endIf();  
     }   
     ; 
  
@@ -112,10 +112,10 @@ while_opr
     : WHILE '(' fin_expr ')' { builder.startWhile(); }
 
        
-if_opr 
+if_opr   
     : O_IF '(' fin_expr ')' { builder.startIf(); } 
-
-if_else_opr          
+      
+if_else_opr           
     : ELSE {	
     builder.addElse();   
 } 
@@ -125,17 +125,17 @@ assignment
         builder.buildAssignment($1);  
     }     
     ;    
-
-declaration
+    
+declaration   
     :NAME ':' type {
         builder.buildDeclaration($1); 
- 
+     
     } 
     |declaration ASSIGNMENT fin_expr {
 	 
-    }     
+    }      
     ;
-    
+        
 type
     :TYPE_INT {
         builder.setDataType(T_INT);
@@ -199,23 +199,23 @@ skladnik
         }
 	|czynnik		{
         
-        }
+        } 
 	; 
 czynnik  
 	:NAME			{
+            builder.addToExpression(ElementFactory::createElement($1)); 
+        }     
+	|INTEGER		{ 
             builder.addToExpression(ElementFactory::createElement($1));
         } 
-	|INTEGER		{
-            builder.addToExpression(ElementFactory::createElement($1));
-        }
 	|FLOAT			{
-            builder.addToExpression(ElementFactory::createElement($1)); 
+            builder.addToExpression(ElementFactory::createElement($1));  
         }
-	|'(' expr ')'		{
-        
+	|'(' logic_expr ')'	{
+         
         }
 	;
-	   
+	    
 %%  
 int main(int argc, char *argv[])
 {		

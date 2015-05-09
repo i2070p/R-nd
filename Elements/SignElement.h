@@ -1,6 +1,7 @@
 #pragma once
 
 #include "LiteralElement.h"
+#include "../Operations/Type.h"
 
 using namespace std;
 
@@ -32,7 +33,7 @@ public:
 
         switch (type) {
             case T_INT:
-                line << commands[this->getValue()] << " t0, t0, t1";
+                line << commands[this->getValue()] << " $t0, $t0, $t1";
                 break;
             case T_FLOAT:
                 switch (this->getValue()) {
@@ -40,25 +41,25 @@ public:
                     case ADDITION:
                     case SUBTRACTION:
                     case MULTIPLICATION:
-                        line << commands[this->getValue()] << ".s f0, f0, f1";
+                        line << commands[this->getValue()] << ".s $f0, $f0, $f1";
                         break;
                     case EQUAL:
-                        line << this->getTemplate("c.eq.s f0, f1");
+                        line << this->getTemplate("c.eq.s $f0, $f1");
                         break;
                     case NOTEQUAL:
-                        line << this->getTemplate("c.eq.s f0, f1", true);
+                        line << this->getTemplate("c.eq.s $f0, $f1", true);
                         break;
                     case GREATERTHAN:
-                        line << this->getTemplate("c.lt.s f1, f0");
+                        line << this->getTemplate("c.lt.s $f1, $f0");
                         break;
                     case LESSEQUAL:
-                        line << this->getTemplate("c.le.s f0, f1");
+                        line << this->getTemplate("c.le.s $f0, $f1");
                         break;
                     case LESSTHAN:
-                        line << this->getTemplate("c.lt.s f0, f1");
+                        line << this->getTemplate("c.lt.s $f0, $f1");
                         break;
                     case GREATEREQUAL:
-                        line << this->getTemplate("c.le.s f1, f0");
+                        line << this->getTemplate("c.le.s $f1, $f0");
                         break;
                 }
 
@@ -84,7 +85,7 @@ private:
         line << val << endl;
 
         line << "movt.s $f2, $f3" << endl;
-        line << "mov.s $f0, $f2 ";
+        line << "mov.s $f0, $f2";
 
         return line.str();
     }
