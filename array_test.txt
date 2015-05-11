@@ -1,0 +1,9 @@
+runner <<
+    
+    {array test}
+    tab : array(int, 5);
+    k : int <- 99;
+    i : int <- 5;
+    k <- tab[i+4+3] + 5;
+
+>>

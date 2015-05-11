@@ -1,0 +1,36 @@
+.data
+$f_one: .float 1
+$f_zero: .float 0
+$new_line: .asciiz "\n"
+tab: .word 0:5
+k: .word 0
+i: .word 0
+$tmp0: .word 0
+$tmp1: .word 0
+$tmp2: .word 0
+
+.text
+li $t0, 99
+sw $t0, k
+li $t0, 5
+sw $t0, i
+lw $t0, i
+li $t1, 4
+add $t0, $t0, $t1
+sw $t0, $tmp0
+lw $t0, $tmp0
+li $t1, 3
+add $t0, $t0, $t1
+sw $t0, $tmp1
+la $t2, tab
+lw $t4, 0x6e70f0
+li $t5, 4
+mul $t4, $t4, $t5
+add $t2, $t2, $t4
+lw $t0, ($t2)
+li $t1, 5
+add $t0, $t0, $t1
+sw $t0, $tmp2
+lw $t0, $tmp2
+sw $t0, k
+

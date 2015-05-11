@@ -4,6 +4,7 @@
 #include "SignElement.h"
 #include "IntElement.h"
 #include "FloatElement.h"
+#include "StringElement.h"
 #include "NameElement.h"
 
 using namespace std;
@@ -19,8 +20,21 @@ public:
         return new FloatElement(value);
     }
 
-    static Element * createElement(string value) {
-        return new NameElement(value);
+    static Element * createElement(string value, bool isName = true) {
+
+        Element * result = NULL;
+
+        if (isName) {
+            result = new NameElement(value);
+        } else {
+            result = new StringElement(value);
+        }
+
+        return result;
+    }
+
+    static Element * createElement(string value, int id) {
+        return new NameElement(value, id);
     }
 
     static Element * createElement(SignType value) {

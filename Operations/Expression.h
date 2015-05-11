@@ -5,6 +5,7 @@
 #include "../Elements/LiteralElement.h"
 #include "../StackAdapter.h"
 #include <sstream>
+#include "../Strings.h"
 
 using namespace std;
 
@@ -27,36 +28,41 @@ public:
         this->elements.push(element);
     }
 
+    bool isStringExpression() {
+        return this->elements.size() == 1 && ElementUtilities::isString(this->elements.at(0));
+    }
+
 protected:
     StackAdapter<Element*> elements;
 
     void generate(SpimCodeContainer * spimCode) {
         bool change = true;
+        if (this->isStringExpression()) {
+            
+        } else {
+            while (change) {
+                change = false;
+                for (int i = 0; i<this->elements.size(); i++) {
 
-        while (change) {
-            change = false;
-            for (int i = 0; i<this->elements.size(); i++) {
-                if (dynamic_cast<SignElement *> (this->elements.at(i))) {
+                    if (ElementUtilities::isString(this->elements.at(i))) {
+                        throw string(Strings::getIncorrectExpressionText(this->elements.at(i)->toString()));
+                    } else {
+                        if (dynamic_cast<SignElement *> (this->elements.at(i))) {
 
-                    compute((SignElement*) this->elements.getAndErase(i), spimCode, i);
-                    change = true;
-                    break;
+                            compute((SignElement*) this->elements.getAndErase(i), spimCode, i);
+                            change = true;
+                            break;
+                        }
+                    }
                 }
             }
         }
     }
 
     void compute(SignElement * sign, SpimCodeContainer * spimCode, int i) {
-
-
         Element* second = this->elements.getAndErase(i - 1);
         Element* first = this->elements.getAndErase(i - 2);
-        
-        cout << sign->toString() << ", first: " << first->toString() << ", second: " << second->toString() << endl;
-
-
-        this->generateInstructions(spimCode, sign, first, second, i-2);
-
+        this->generateInstructions(spimCode, sign, first, second, i - 2);
     }
 
     string generateInstructions(SpimCodeContainer * spimCode, SignElement* sign, Element * e1, Element * e2, int i) {
@@ -71,7 +77,6 @@ protected:
             line << sign->getCommand(T_INT) << endl;
             line << "sw $t0, " << tmp1;
             spimCode->addOperation(line.str());
-
             spimCode->addVariable(tmp1, new Type(T_INT));
             this->elements.insert(ElementFactory::createElement(tmp1), i);
         } else if (ElementUtilities::isInt(e1) && ElementUtilities::isFloat(e2)) {
@@ -120,10 +125,20 @@ protected:
         } else if (ElementUtilities::isName(e1)) {
             Type * type = spimCode->getVariable(e1->toString());
             
+            int * id = ((NameElement*)e1)->getArrayId();
+            if (id) {
+                line << "la $t2, " << e1->toString() << endl;
+                line << "lw $t4, " << this->elements.top() << endl;
+                line << "li $t5, 4" << endl;
+                line << "mul $t4, $t4, $t5" << endl;
+                line << "add $t2, $t2, $t4" << endl;
+            }
+            
             if (type) {
+                
                 if (type->is(T_INT)) {
                     if (ElementUtilities::isInt(e2)) {
-                        line << "lw $t0, " << e1->toString() << endl;
+                        line << "lw $t0, " << (id?"($t2)":e1->toString()) << endl;
                         line << "li $t1, " << e2->toString() << endl;
                         line << sign->getCommand(T_INT) << endl;
                         line << "sw $t0, " << tmp1;
@@ -156,7 +171,7 @@ protected:
                                 line << "sw $t0, " << tmp1;
                                 spimCode->addOperation(line.str());
                                 spimCode->addVariable(tmp1, new Type(T_INT));
-                                this->elements.insert(ElementFactory::createElement(tmp1), i);  
+                                this->elements.insert(ElementFactory::createElement(tmp1), i);
                             } else if (type2->is(T_FLOAT)) {
 
                                 line << "lw $t0, " << e1->toString() << endl;

@@ -6,7 +6,10 @@
 enum Types {
     T_INT,
     T_FLOAT,
-    T_STR
+    T_STR,
+    T_AINT,
+    T_AFLOAT,
+    T_ASTR
 };
 
 class Type : public ToString {
@@ -23,7 +26,7 @@ public:
     string toString() {
         stringstream ss;
 
-        switch (this->type) {
+        switch (this->type % 3) {
             case T_INT:
                 ss << ".word";
                 break;
@@ -31,10 +34,24 @@ public:
                 ss << ".float";
                 break;
             case T_STR:
-                ss << ".<unknow>";
+                ss << ".asciiz";
                 break;
         }
         return ss.str();
+    }
+
+    void setArrayType() {
+        switch (this->type) {
+            case T_INT:
+                this->type = T_AINT;
+                break;
+            case T_FLOAT:
+                this->type = T_AFLOAT;
+                break;
+            case T_STR:
+                this->type = T_ASTR;
+                break;
+        }
     }
 
 protected:

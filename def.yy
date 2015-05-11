@@ -48,7 +48,7 @@ Builder builder;
 %token ELSEIF
 %token FOR 
 %token PRINT
-%token RETURN  
+%token READ  
 %token BREAK
 %token GT
 %token V_TRUE
@@ -61,29 +61,27 @@ Builder builder;
 %token TYPE_FLOAT
 %token TYPE_VOID
 %token TYPE_STR
-
+%token ARRAY
 %token TO
 %token DOWNTO
 
+%token <text> COMMENT
 %token <text> STR
 %token <ival> INTEGER
 %token <fval> FLOAT
 %token <text> NAME
-
+  
 %left '+' '-'  
-%left '*' '/'
+%left '*' '/' 
 %start begin  
    
 %%
- 
+      
 begin  
     :RUNNER BEGIN_BLOCK lines END_BLOCK { builder.startGenerate(); cout << "beg\n"; 
          
-    }
-    | '{' STR '}' {
-
-    }
-    ; 
+    } 
+    ;    
  
 lines       
     :lines line {} 
@@ -92,17 +90,28 @@ lines
   
 line 
     :declaration ';' { builder.addExpressionToSimpleOperation(); }
+    |array_declaration ';' { builder.addExpressionToSimpleOperation(); }
     |assignment ';' { builder.addExpressionToSimpleOperation(); }
     |if_opr block { builder.endIf();
     }   
-  
-    |while_opr block { builder.endWhile(); 
-    }
+   
+    |while_opr block { 
+        builder.endWhile(); 
+    } 
     
     |if_opr block if_else_opr block {  
         builder.endIf();  
-    }   
-    ; 
+    }
+    | comment {  
+    
+    }
+    | print ';' { 
+          builder.addExpressionToSimpleOperation(); 
+    }  
+    | read ';' { 
+        builder.addSimpleOperationToCurrentBlock();
+    }
+    ;     
  
 block 
     : BEGIN_BLOCK lines END_BLOCK { } 
@@ -123,29 +132,64 @@ if_else_opr
 assignment   
     :NAME ASSIGNMENT fin_expr { 
         builder.buildAssignment($1);  
-    }     
-    ;    
+    }       
+    ;     
+
+print   
+    :PRINT STR { 
+        builder.buildPrint($2);
+    }
+    |PRINT fin_expr  { 
+        builder.buildPrint();
+    }
+    ;
+
+read   
+    :READ NAME { 
+        builder.buildRead($2);
+    }
     
+    ;
+
+
+comment
+    : COMMENT {
+    
+}
+
+
+array_declaration
+    :NAME ':' array {
+        builder.buildArrayDeclaration($1);
+    }
+    ;
+
 declaration   
     :NAME ':' type {
         builder.buildDeclaration($1); 
      
-    } 
+    }
     |declaration ASSIGNMENT fin_expr {
 	 
     }      
     ;
-        
+
+array
+    :ARRAY '(' type ',' INTEGER  ')'  {
+        builder.setArraySize($5);
+    }        
+    ;
+
 type
-    :TYPE_INT {
+    :TYPE_INT {  
         builder.setDataType(T_INT);
     }
-    |TYPE_FLOAT {
+    |TYPE_FLOAT { 
         builder.setDataType(T_FLOAT);
     }
     |TYPE_STR {
         builder.setDataType(T_STR);
-    }
+    } 
     ;    
   
 fin_expr 
@@ -180,7 +224,7 @@ logic_expr
      
 expr 
 	:expr '+' skladnik	{ 
-            builder.addToExpression(ElementFactory::createElement(ADDITION));
+            builder.addToExpression(ElementFactory::createElement(ADDITION)); 
         }
 	|expr '-' skladnik	{  
             builder.addToExpression(ElementFactory::createElement(SUBTRACTION)); 
@@ -188,7 +232,7 @@ expr
 	|skladnik		{
         
         }
-	;
+	; 
   
 skladnik    
 	:skladnik '*' czynnik	{
@@ -200,24 +244,30 @@ skladnik
 	|czynnik		{
         
         } 
-	; 
+	;        
 czynnik  
-	:NAME			{
+	:NAME			{  cout << "name exp" << endl;
             builder.addToExpression(ElementFactory::createElement($1)); 
         }     
-	|INTEGER		{ 
+	|INTEGER		{  cout << "int exp" << endl;
             builder.addToExpression(ElementFactory::createElement($1));
         } 
-	|FLOAT			{
+	|FLOAT			{ cout << "float exp" << endl;
             builder.addToExpression(ElementFactory::createElement($1));  
+        } 
+	|STR			{ cout << "str exp" << endl;
+            builder.addToExpression(ElementFactory::createElement($1, false));  
+        }
+        |NAME '[' logic_expr ']' { 
+            builder.addToExpression(ElementFactory::createElement($1, 3));    
         }
 	|'(' logic_expr ')'	{
          
         }
 	;
-	    
+	     
 %%  
-int main(int argc, char *argv[])
+int main(int argc, char *argv[]) 
 {		
 	yyparse();
 	return 0;

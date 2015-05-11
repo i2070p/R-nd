@@ -8,7 +8,7 @@ extern int yylineno;
 int yyerror(const char *msg, ...);
 void writeLexValue(char *);
 %}
-
+ 
 %%
 \+			{return '+';} 
 \*			{return '*';}
@@ -18,17 +18,14 @@ void writeLexValue(char *);
 \]			{return ']';}
 \/			{return '/';}
 \-			{return '-';}
+\,			{return ',';}
 \=			{return '=';}
 \;			{return ';';}
 \:			{return ':';}
 
-\{			{return '{';}
-\}			{return '}';}
-
 \<\<			{return BEGIN_BLOCK;}
 \>\>			{return END_BLOCK;}
-
-
+ 
 \!\=	    {return NOT_EQUAL;}	
 \<			{return '<';}
 \>			{return '>';}
@@ -41,18 +38,18 @@ and			{return B_AND;}
 not		    {return B_NOT;}	
 mod			{return MOD;}	
 \@\?		{return O_IF;}	
-\@\!        {return ELSE;}	
+\@\!        {return ELSE;} 	
 \@\!\?      {return ELSEIF;}	
 \@f		    {return FOR;}	
 \@w         {return WHILE;}	
-\@r         {return RETURN;}	
+\@r         {return READ;}	
 \@b         {return BREAK;}	
 \@gt        {return GT;}	
-\@p         {return PRINT;}	
+\@p         {return PRINT;}	 
 true        {return V_TRUE;}	
 false       {return V_FALSE;}	
 nil         {return V_NIL;}	
-
+array       {return ARRAY;}	
 int         {return TYPE_INT;}
 
 float             {
@@ -94,14 +91,19 @@ downto      {
 				return FLOAT;
 }	 
 
-\".*\"    		{
+\{[^}]*\}               {
 				yylval.text = strdup(yytext);
-				return STR;                                         
+				return COMMENT;
 }
 
-
+\"[^"]*\"		{
+				yylval.text = strdup(yytext);
+				return STR;
+}
+	
 \ |\t			{}
 \n			{yylineno++;}
+
 .			{yyerror("Błąd leksykalny\n");}
 %%
 int yyerror(const char *msg, ...)

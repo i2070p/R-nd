@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../StackAdapter.h"
+#include <iostream>
+#include <fstream>
 #include "Expression.h"
 #include <typeinfo>
 #include <sstream>
@@ -12,6 +14,9 @@
 #include "Condition.h"
 #include "If.h"
 #include "While.h"
+#include "Print.h"
+#include "Read.h"
+#include "ArrayDeclaration.h"
 
 using namespace std;
 
@@ -72,6 +77,7 @@ public:
     }
 
     void addSimpleOperationToCurrentBlock() {
+
         this->current->add(this->currentSimple);
     }
 
@@ -81,6 +87,22 @@ public:
 
     void buildAssignment(string name) {
         this->currentSimple = new Assignment(this->current, new NameElement(name));
+    }
+
+    void buildArrayDeclaration(string name) {
+        this->currentSimple = new ArrayDeclaration(this->current, new NameElement(name), new Type(this->dataType), this->arraySize);
+    }
+
+    void buildPrint() {
+        this->currentSimple = new Print(this->current);
+    }
+
+    void buildPrint(string str) {
+        this->currentSimple = new Print(this->current, str);
+    }
+
+    void buildRead(string name) {
+        this->currentSimple = new Read(this->current, new NameElement(name));
     }
 
     void addToExpression(Element * element) {
@@ -97,6 +119,17 @@ public:
             this->exp = NULL;
         }
     }
+    void finishIndexExpression() {
+        if (this->exp) {
+            this->exps.push(this->exp);
+            this->exp = NULL;
+        }
+    }
+    void popExpression() {
+        if (this->exps.size()) {
+            this->exp = this->exps.pop();
+        }
+    }
 
     void addExpressionToSimpleOperation() {
         if (!this->exps.isEmpty()) {
@@ -105,6 +138,8 @@ public:
                 ((Declaration *)this->currentSimple)->addExpression(exp);
             } else if (dynamic_cast<Assignment *> (this->currentSimple)) {
                 ((Assignment *)this->currentSimple)->addExpression(exp);
+            } else if (dynamic_cast<Print *> (this->currentSimple)) {
+                ((Print *)this->currentSimple)->addExpression(exp);
             }
         }
         this->addSimpleOperationToCurrentBlock();
@@ -116,18 +151,25 @@ public:
         } catch (string e) {
             cout << e << endl;
         }
-        cout << this->spimCode.toString();
+
+        ofstream myfile;
+        myfile.open("fin.txt");
+        myfile << this->spimCode.toString();
+        myfile.close();
     }
 
     void setDataType(Types dataType) {
         this->dataType = dataType;
     }
 
+    void setArraySize(int size) {
+        this->arraySize = size;
+    }
 protected:
     StackAdapter<Operation*> building;
     StackAdapter<Operation*> ready;
     Types dataType;
-
+    int arraySize;
     StackAdapter<Expression*> exps;
     Expression * exp;
     ComplexOperation * current, * runner;

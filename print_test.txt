@@ -1,0 +1,25 @@
+runner <<
+    
+    {print test}
+    k : int <- 2 + 5;
+    f : float <- 1.2 * 3;
+    c : string <- "fsdffds";
+    v : string;
+
+    v <- "42dsfsdf234";
+    
+    @p v;
+    @p "test string";
+    @p 2;
+    @p 3.1415;
+    @p k;
+    @p f;
+    @p 2+2;
+    @p 3.1 + 0.2;
+    @p (k + f)/2;
+
+    
+    @r d;
+    @p f;
+
+>>

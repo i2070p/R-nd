@@ -1,9 +1,12 @@
 runner <<
 
+    {DO IEZD GOMENDAŻ}
+
     k : float <- 0;
 
     @w ( k < 0.5 + 0.03  ) <<
         k <- k + 0.01;        
     >>
-
+    
+    @p 2;
 >>

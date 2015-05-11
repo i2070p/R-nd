@@ -52,7 +52,7 @@
      ELSEIF = 270,
      FOR = 271,
      PRINT = 272,
-     RETURN = 273,
+     READ = 273,
      BREAK = 274,
      GT = 275,
      V_TRUE = 276,
@@ -65,12 +65,14 @@
      TYPE_FLOAT = 283,
      TYPE_VOID = 284,
      TYPE_STR = 285,
-     TO = 286,
-     DOWNTO = 287,
-     STR = 288,
-     INTEGER = 289,
-     FLOAT = 290,
-     NAME = 291
+     ARRAY = 286,
+     TO = 287,
+     DOWNTO = 288,
+     COMMENT = 289,
+     STR = 290,
+     INTEGER = 291,
+     FLOAT = 292,
+     NAME = 293
    };
 #endif
 
@@ -90,7 +92,7 @@ typedef union YYSTYPE
 
 
 /* Line 2068 of yacc.c  */
-#line 94 "def.tab.hh"
+#line 96 "def.tab.hh"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

@@ -11,10 +11,12 @@
         <in>LiteralElement.h</in>
         <in>NameElement.h</in>
         <in>SignElement.h</in>
+        <in>StringElement.h</in>
       </df>
       <df name="Operations">
         <df name="Exceptions">
         </df>
+        <in>ArrayDeclaration.h</in>
         <in>Assignment.h</in>
         <in>Block.h</in>
         <in>Builder.h</in>
@@ -25,6 +27,8 @@
         <in>If.h</in>
         <in>Operation.h</in>
         <in>OperationContainer.h</in>
+        <in>Print.h</in>
+        <in>Read.h</in>
         <in>Runner.h</in>
         <in>SimpleOperation.h</in>
         <in>Type.h</in>

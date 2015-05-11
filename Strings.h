@@ -5,6 +5,8 @@
 #include <sstream>
 
 #define VAR_UNDECLARED "undeclared."
+#define INCORRECT_EPXRESSION "It is impossible to calculate expression which contains string element"
+#define INCOMPATIBLE_TYPES "Incompatible types."
 
 using namespace std;
 
@@ -13,7 +15,19 @@ public:
 
     static string getUndeclaredText(string var) {
         stringstream ss;
-        ss << "\"" << var << "\" " << VAR_UNDECLARED << endl;
+        ss << "\"" << var << "\" " << VAR_UNDECLARED;
+        return ss.str();
+    };
+
+    static string getIncorrectExpressionText(string var) {
+        stringstream ss;
+        ss << INCORRECT_EPXRESSION << " - \"" << var << "\".";
+        return ss.str();
+    };
+    
+    static string getIncompatibleTypesText() {
+        stringstream ss;
+        ss << INCOMPATIBLE_TYPES;
         return ss.str();
     };
 

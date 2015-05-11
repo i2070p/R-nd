@@ -25,6 +25,10 @@ public:
         return dynamic_cast<NameElement *> (element);
     }
 
+    static bool isString(Element * element) {
+        return dynamic_cast<StringElement *> (element);
+    }
+        
     static bool isSign(Element * element) {
         return dynamic_cast<SignElement *> (element);
     }
