@@ -4,6 +4,7 @@
 #include <map>
 #include "StackAdapter.h"
 #include "Operations/Type.h"
+#include "Strings.h"
 using namespace std;
 
 class SpimCodeContainer {
@@ -55,8 +56,8 @@ public:
         this->vars.insert(pair<string, Type*>(name, type));
         this->arrayLength.insert(pair<string, int>(name, size));
         this->variables << name << ": " << type->toString() << " 0:" << size << endl;
-    }    
-    
+    }
+
     void addOperation(string operation) {
         this->operations << operation << endl;
     }
@@ -100,7 +101,7 @@ public:
     Type* getVariable(string key) {
         map<string, Type*>::const_iterator it = this->vars.find(key);
         if (it == this->vars.end()) {
-            return NULL;
+            throw string(Strings::getUndeclaredText(key));
         }
         return this->vars[key];
     }
@@ -110,7 +111,7 @@ public:
         ss << this->variables.str() << endl << operations.str() << endl;
         return ss.str();
     }
-
+    StackAdapter<Element*> mStack;
 protected:
     stringstream variables, operations;
 

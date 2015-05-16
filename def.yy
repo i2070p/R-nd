@@ -1,24 +1,24 @@
 %{
 #include <stdio.h>
 #include <fstream> 
-#include <sstream> 
+#include <sstream>  
 #include <stack>    
-#include <vector>  
+#include <vector>   
 #include <string>     
 #include "StackAdapter.h"
-#include <iostream>
+#include <iostream> 
 #include "Elements/ElementFactory.h"    
-#include "Operations/Builder.h"     
+#include "Operations/Builder.h"       
 #include <map>      
-#define INFILE_ERROR 1        
-#define OUTFILE_ERROR 2    
-     
+#define INFILE_ERROR 1           
+#define OUTFILE_ERROR 2      
+          
 extern "C" int yylex(); 
 extern "C" int yyerror(const char *msg, ...);
   
 using namespace std;
   
-    
+     
 ofstream trojki;
 ofstream spim;
  
@@ -31,7 +31,7 @@ Builder builder;
  int	ival;
  float fval;
 };
-
+  
 
 %token NOT_EQUAL
 %token GREATER_EQUAL
@@ -61,40 +61,40 @@ Builder builder;
 %token TYPE_FLOAT
 %token TYPE_VOID
 %token TYPE_STR
-%token ARRAY
+%token ARRAY  
 %token TO
 %token DOWNTO
-
+ 
 %token <text> COMMENT
 %token <text> STR
 %token <ival> INTEGER
 %token <fval> FLOAT
-%token <text> NAME
+%token <text> NAME 
   
 %left '+' '-'  
 %left '*' '/' 
 %start begin  
-   
-%%
-      
+    
+%% 
+         
 begin  
-    :RUNNER BEGIN_BLOCK lines END_BLOCK { builder.startGenerate(); cout << "beg\n"; 
+    :RUNNER BEGIN_BLOCK lines END_BLOCK { builder.startGenerate(); cout << "beg\n";  
          
     } 
     ;    
  
-lines       
+lines          
     :lines line {} 
     |line {}   
     ;   
-  
+    
 line 
     :declaration ';' { builder.addExpressionToSimpleOperation(); }
     |array_declaration ';' { builder.addExpressionToSimpleOperation(); }
     |assignment ';' { builder.addExpressionToSimpleOperation(); }
     |if_opr block { builder.endIf();
     }   
-   
+      
     |while_opr block { 
         builder.endWhile(); 
     } 
