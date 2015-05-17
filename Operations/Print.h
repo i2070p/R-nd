@@ -61,12 +61,12 @@ protected:
                 } else if (ElementUtilities::isName(el)) {
                     Type * type = spimCode->getVariable(el->toString());
                     int * id = ((NameElement*) el)->getArrayId();
-                    string idTmp = this->generateIndexComputing(spimCode, el, line, id);
-
+                    string idTmp = this->generateIndexComputing(spimCode, line, id);
                     if (type) {
                         if (type->is(T_INT)) {
                             if (id) {
                                 line << "lw $t2, " << idTmp << endl;
+                                cout << idTmp << "  dff" << endl;
                             }
                             line << "lw $t0, " << (id ? "($t2)" : el->toString()) << endl;
                             line << "li $v0, 1" << endl;
@@ -80,9 +80,8 @@ protected:
                             line << "li $v0, 2" << endl;
                             line << "syscall" << endl;
                         }
-                    } else {
-                        throw string(Strings::getUndeclaredText(el->toString()));
                     }
+
                 }
                 this->addNewLine(line);
                 spimCode->addOperation(line.str());
@@ -98,31 +97,43 @@ private:
         line << "syscall";
     }
 
-    string generateIndexComputing(SpimCodeContainer * spimCode, Element* e, stringstream & line, int * id) {
+    string generateIndexComputing(SpimCodeContainer * spimCode, stringstream & line, int * id) {
         string idTmp = "";
 
         if (id) {
+       /*     Element * e = spimCode->mStack.pop();
             Element * m = spimCode->mStack.pop();
+
+            cout << endl;
             line << "la $t2, " << e->toString() << endl;
 
             if (ElementUtilities::isInt(m)) {
                 line << "li $t4, " << m->toString() << endl;
             } else if (ElementUtilities::isFloat(m)) {
-                line << "l.s $f0, " << m->toString() << endl;
+                string tmp = spimCode->addTmpFloatVar(m->toString());
+                line << "l.s $f0, " << tmp << endl;
                 line << "cvt.w.s $f0, $f0" << endl;
                 line << "mfc1 $t4, $f0" << endl;
             } else if (ElementUtilities::isName(m)) {
-                line << "lw $t4, " << m->toString() << endl;
-            }
+                Type * type = spimCode->getVariable(m->toString());
 
+                if (type->is(T_INT)) {
+                    line << "lw $t4, " << m->toString() << endl;
+                } else if (type->is(T_FLOAT)) {
+                    line << "l.s $f0, " << m->toString() << endl;
+                    line << "cvt.w.s $f0, $f0" << endl;
+                    line << "mfc1 $t4, $f0" << endl;
+                }
+            }
             line << "li $t5, 4" << endl;
             line << "mul $t4, $t4, $t5" << endl;
             line << "add $t2, $t2, $t4" << endl;
             idTmp = spimCode->getNextTmpVar();
             line << "sw $t2, " << idTmp << endl;
             spimCode->addVariable(idTmp, new Type(T_INT));
-        }
 
+*/
+        }
         return idTmp;
     }
 };

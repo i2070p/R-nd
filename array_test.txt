@@ -2,15 +2,25 @@ runner <<
     
     {array test}
     tab : array(int, 10);
-    k : int <- 2 + 5;
+    {k : int <- 2 + 5;
     f : float <- 1.2 * 3;
-    id : int <- ((((2+2.0)/k)*f)/1.25)*4.14/1.2;
-    k <- tab[id];
+    tmp : int <- 7;}
+    {id : float <- ((((2+2.0)/k)*f)/1.25)*4.14/1.2;
+    k <- tab[id];}
     
-    @p id;
-    @p k;
+   { @p id;
+    @p "Tego szukasz:";}
+    @p tab[tab[4]+1];
+    {@p k;
     @p tab[1];
     @p tab[2.4];
     @p tab[1.2+2.3];
 
+
+    @p "Elementy tab";
+    i : int <- 0;
+    @w ( i < 9  ) <<
+        @p tab[i];  
+        i <- i + 1;
+    >>}
 >>

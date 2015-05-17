@@ -2,132 +2,30 @@
 $f_one: .float 1
 $f_zero: .float 0
 $new_line: .asciiz "\n"
-tab: .word 3, 0, 1, 2, 6, -2, 4, 7, 3, 7
+tab: .word 1,2,3,4,5,6,7,8,9,0
+$tmp1: .word 0
 $tmp0: .word 0
-k: .word 0
-$tmp2: .float 1.2
-$tmp1: .float 0
-f: .float 0
-$tmp4: .float 2
-$tmp3: .float 0
-$tmp5: .float 0
-$tmp6: .float 0
-$tmp8: .float 1.25
-$tmp7: .float 0
-$tmp10: .float 4.14
-$tmp9: .float 0
-$tmp12: .float 1.2
-$tmp11: .float 0
-id: .word 0
-$tmp13: .word 0
-$tmp14: .word 0
-$tmp16: .float 1.2
-$tmp17: .float 2.3
-$tmp15: .float 0
-$tmp18: .word 0
+$tmp2: .word 0
 
 .text
-li $t0, 2
-li $t1, 5
+la $t2, tab
+li $t4, 4
+li $t5, 4
+mul $t4, $t4, $t5
+add $t2, $t2, $t4
+sw $t2, $tmp1
+lw $t2, $tmp1
+lw $t0, ($t2)
+li $t1, 1
 add $t0, $t0, $t1
 sw $t0, $tmp0
-lw $t0, $tmp0
-sw $t0, k
-li $t0, 3
-mtc1 $t0, $f0
-cvt.s.w $f0, $f0
-l.s $f1, $tmp2
-mul.s $f0, $f0, $f1
-s.s $f0, $tmp1
-l.s $f0, $tmp1
-s.s $f0, f
-li $t0, 2
-mtc1 $t0, $f0
-cvt.s.w $f0, $f0
-l.s $f1, $tmp4
-add.s $f0, $f0, $f1
-s.s $f0, $tmp3
-lw $t0, k
-mtc1 $t0, $f1
-cvt.s.w $f1, $f1
-l.s $f0, $tmp3
-div.s $f0, $f0, $f1
-s.s $f0, $tmp5
-l.s $f0, $tmp5
-l.s $f1, f
-mul.s $f0, $f0, $f1
-s.s $f0, $tmp6
-l.s $f0, $tmp6
-l.s $f1, $tmp8
-div.s $f0, $f0, $f1
-s.s $f0, $tmp7
-l.s $f0, $tmp7
-l.s $f1, $tmp10
-mul.s $f0, $f0, $f1
-s.s $f0, $tmp9
-l.s $f0, $tmp9
-l.s $f1, $tmp12
-div.s $f0, $f0, $f1
-s.s $f0, $tmp11
-l.s $f0, $tmp11
-cvt.w.s $f0, $f0
-mfc1 $t0, $f0
-sw $t0, id
-lw $t0, tab
-sw $t0, k
-lw $t0, id
-li $v0, 1
-move $a0, $t0
-syscall
-li $v0, 4
-la $a0, $new_line
-syscall
-lw $t0, k
-li $v0, 1
-move $a0, $t0
-syscall
-li $v0, 4
-la $a0, $new_line
-syscall
 la $t2, tab
-lw $t4, tab
+lw $t4, $tmp0
 li $t5, 4
 mul $t4, $t4, $t5
 add $t2, $t2, $t4
-sw $t2, $tmp13
-lw $t2, $tmp13
-lw $t0, ($t2)
-li $v0, 1
-move $a0, $t0
-syscall
-li $v0, 4
-la $a0, $new_line
-syscall
-la $t2, tab
-lw $t4, tab
-li $t5, 4
-mul $t4, $t4, $t5
-add $t2, $t2, $t4
-sw $t2, $tmp14
-lw $t2, $tmp14
-lw $t0, ($t2)
-li $v0, 1
-move $a0, $t0
-syscall
-li $v0, 4
-la $a0, $new_line
-syscall
-l.s $f0, $tmp16
-l.s $f1, $tmp17
-add.s $f0, $f0, $f1
-s.s $f0, $tmp15
-la $t2, tab
-lw $t4, tab
-li $t5, 4
-mul $t4, $t4, $t5
-add $t2, $t2, $t4
-sw $t2, $tmp18
-lw $t2, $tmp18
+sw $t2, $tmp2
+lw $t2, $tmp2
 lw $t0, ($t2)
 li $v0, 1
 move $a0, $t0

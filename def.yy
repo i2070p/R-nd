@@ -82,15 +82,15 @@ begin
          
     } 
     ;    
- 
-lines          
+  
+lines            
     :lines line {} 
-    |line {}   
+    |line {}     
     ;   
     
 line 
     :declaration ';' { builder.addExpressionToSimpleOperation(); }
-    |array_declaration ';' { builder.addExpressionToSimpleOperation(); }
+    |array_declaration ';' { builder.addExpressionToSimpleOperation(); } 
     |assignment ';' { builder.addExpressionToSimpleOperation(); }
     |if_opr block { builder.endIf();
     }   
@@ -152,13 +152,13 @@ read
     ;
 
 
-comment
-    : COMMENT {
+comment   
+    : COMMENT {  
     
 }
 
 
-array_declaration
+array_declaration  
     :NAME ':' array {
         builder.buildArrayDeclaration($1);
     }
@@ -222,7 +222,7 @@ logic_expr
         }  
         ;
      
-expr 
+expr  
 	:expr '+' skladnik	{ 
             builder.addToExpression(ElementFactory::createElement(ADDITION)); 
         }
@@ -244,7 +244,7 @@ skladnik
 	|czynnik		{
         
         } 
-	;        
+	;         
 czynnik  
 	:NAME			{  cout << "name exp" << endl;
             builder.addToExpression(ElementFactory::createElement($1)); 
@@ -252,20 +252,20 @@ czynnik
 	|INTEGER		{  cout << "int exp" << endl;
             builder.addToExpression(ElementFactory::createElement($1));
         } 
-	|FLOAT			{ cout << "float exp" << endl;
+	|FLOAT	 		{ cout << "float exp" << endl;
             builder.addToExpression(ElementFactory::createElement($1));  
-        } 
+        }  
 	|STR			{ cout << "str exp" << endl;
             builder.addToExpression(ElementFactory::createElement($1, false));  
-        }
+        } 
         |NAME '[' logic_expr ']' { 
             builder.addToExpression(ElementFactory::createElement($1, 3));    
         }
 	|'(' logic_expr ')'	{
-         
+               
         }
 	;
-	     
+	      
 %%  
 int main(int argc, char *argv[]) 
 {		

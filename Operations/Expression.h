@@ -461,11 +461,20 @@ protected:
             if (ElementUtilities::isInt(m)) {
                 line << "li $t4, " << m->toString() << endl;
             } else if (ElementUtilities::isFloat(m)) {
-                line << "l.s $f0, " << m->toString() << endl;
+                string tmp = spimCode->addTmpFloatVar(m->toString());
+                line << "l.s $f0, " << tmp << endl;
                 line << "cvt.w.s $f0, $f0" << endl;
                 line << "mfc1 $t4, $f0" << endl;
             } else if (ElementUtilities::isName(m)) {
-                line << "lw $t4, " << m->toString() << endl;
+                Type * type = spimCode->getVariable(m->toString());
+
+                if (type->is(T_INT)) {
+                    line << "lw $t4, " << m->toString() << endl;
+                } else if (type->is(T_FLOAT)) {
+                    line << "l.s $f0, " << m->toString() << endl;
+                    line << "cvt.w.s $f0, $f0" << endl;
+                    line << "mfc1 $t4, $f0" << endl;
+                }
             }
 
             line << "li $t5, 4" << endl;

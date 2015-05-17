@@ -26,7 +26,6 @@ public:
     }
 
     void setArrayId(Element * id) {
-        cout << id << "SDfsdfsdfs" << endl;
         this->id = id;
     }
     

@@ -112,6 +112,7 @@ public:
         return ss.str();
     }
     StackAdapter<Element*> mStack;
+    
 protected:
     stringstream variables, operations;
 
