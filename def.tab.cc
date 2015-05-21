@@ -67,26 +67,26 @@
 #include <stdio.h>
 #include <fstream> 
 #include <sstream>  
-#include <stack>    
+#include <stack>     
 #include <vector>   
-#include <string>     
+#include <string>      
 #include "StackAdapter.h"
 #include <iostream> 
 #include "Elements/ElementFactory.h"    
-#include "Operations/Builder.h"       
-#include <map>      
-#define INFILE_ERROR 1           
-#define OUTFILE_ERROR 2      
-          
+#include "Operations/Builder.h"         
+#include <map>       
+#define INFILE_ERROR 1              
+#define OUTFILE_ERROR 2       
+           
 extern "C" int yylex(); 
 extern "C" int yyerror(const char *msg, ...);
   
 using namespace std;
-  
+     
      
 ofstream trojki;
 ofstream spim;
- 
+    
 Builder builder;
 
 
@@ -1417,7 +1417,7 @@ yyreduce:
 
   case 13:
 #line 111 "def.yy" /* yacc.c:1646  */
-    { 
+    {   
         builder.addSimpleOperationToCurrentBlock();
     }
 #line 1424 "def.tab.cc" /* yacc.c:1646  */
@@ -1578,7 +1578,7 @@ yyreduce:
 
   case 34:
 #line 208 "def.yy" /* yacc.c:1646  */
-    {
+    { 
             builder.addToExpression(ElementFactory::createElement(LESSTHAN));      
         }
 #line 1585 "def.tab.cc" /* yacc.c:1646  */
@@ -1666,7 +1666,7 @@ yyreduce:
 
   case 45:
 #line 249 "def.yy" /* yacc.c:1646  */
-    {  cout << "name exp" << endl;
+    { 
             builder.addToExpression(ElementFactory::createElement((yyvsp[0].text))); 
         }
 #line 1673 "def.tab.cc" /* yacc.c:1646  */
@@ -1674,7 +1674,7 @@ yyreduce:
 
   case 46:
 #line 252 "def.yy" /* yacc.c:1646  */
-    {  cout << "int exp" << endl;
+    {  
             builder.addToExpression(ElementFactory::createElement((yyvsp[0].ival)));
         }
 #line 1681 "def.tab.cc" /* yacc.c:1646  */
@@ -1682,7 +1682,7 @@ yyreduce:
 
   case 47:
 #line 255 "def.yy" /* yacc.c:1646  */
-    { cout << "float exp" << endl;
+    { 
             builder.addToExpression(ElementFactory::createElement((yyvsp[0].fval)));  
         }
 #line 1689 "def.tab.cc" /* yacc.c:1646  */
@@ -1690,7 +1690,7 @@ yyreduce:
 
   case 48:
 #line 258 "def.yy" /* yacc.c:1646  */
-    { cout << "str exp" << endl;
+    { 
             builder.addToExpression(ElementFactory::createElement((yyvsp[0].text), false));  
         }
 #line 1697 "def.tab.cc" /* yacc.c:1646  */
@@ -1699,7 +1699,7 @@ yyreduce:
   case 49:
 #line 261 "def.yy" /* yacc.c:1646  */
     { 
-            builder.addToExpression(ElementFactory::createElement((yyvsp[-3].text), 3));    
+            builder.addToExpression(ElementFactory::createArrayElement((yyvsp[-3].text)));    
         }
 #line 1705 "def.tab.cc" /* yacc.c:1646  */
     break;

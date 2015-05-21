@@ -11,25 +11,31 @@ public:
 
     NameElement(string value) : LiteralElement(value) {
         this->ids = NULL;
+        this->array = false;
     }
 
-    NameElement(string value, int id) : LiteralElement(value) {
-        this->ids = &id;
+    NameElement(string value, bool array) : LiteralElement(value) {
+        this->array = array;
     }
 
-    int * getArrayId() {
+    string * getArrayId() {
         return this->ids;
     }
-    
+
     Element * _getArrayId() {
         return this->id;
     }
 
-    void setArrayId(Element * id) {
-        this->id = id;
+    void setArrayId(string * id) {
+        this->ids = id;
     }
-    
+
+    bool isArray() {
+        return this->array;
+    }
+
 protected:
-    int * ids;
+    bool array;
+    string * ids;
     Element * id;
 };

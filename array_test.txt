@@ -1,26 +1,26 @@
 runner <<
     
     {array test}
-    tab : array(int, 10);
-    {k : int <- 2 + 5;
-    f : float <- 1.2 * 3;
-    tmp : int <- 7;}
-    {id : float <- ((((2+2.0)/k)*f)/1.25)*4.14/1.2;
-    k <- tab[id];}
+    {0, 1, 2, 3, 4.5, 5, 6, 7, 8, 9, 10, 11, 12, 13,14,15,16,17,18,19,20 }
     
-   { @p id;
-    @p "Tego szukasz:";}
-    @p tab[tab[4]+1];
-    {@p k;
-    @p tab[1];
-    @p tab[2.4];
-    @p tab[1.2+2.3];
+    f : float <- 3.99;
+    i : int <- 4;
 
+    tab : array(float, 10);
+    
+    t : int <- tab[tab[2] + tab[2.13] + tab[2 * 3.14 + f]];
+    @p t;
+    @p tab[2]+tab[2];
+    @p tab[tab[2] + tab[2.13] + tab[2 * 3.14 + f]];
+    @p tab[2.0];
+    @p tab[3.14+2];
+    @p tab[f];
+    @p tab[i];
 
     @p "Elementy tab";
-    i : int <- 0;
-    @w ( i < 9  ) <<
-        @p tab[i];  
-        i <- i + 1;
-    >>}
+    k : int <- 0;
+    @w ( k < 10  ) <<
+        @p tab[k + f];  
+        k <- k + 1;
+    >>
 >>

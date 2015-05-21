@@ -20,6 +20,12 @@ public:
         this->adr = 0;
     }
 
+    string addTmpIntVar(string val) {
+        string result = this->getNextTmpVar();
+        this->addVariable(result, new Type(T_INT), val);
+        return result;
+    }    
+    
     string addTmpFloatVar(string val) {
         string result = this->getNextTmpVar();
         this->addVariable(result, new Type(T_FLOAT), val);

@@ -57,19 +57,18 @@ protected:
                     } else if (ElementUtilities::isName(el)) {
                         Type * type = spimCode->getVariable(el->toString());
 
-                        int * id = ((NameElement*) el)->getArrayId();
-                        string idTmp = this->generateIndexComputing(spimCode, line, id);
+                        string * id = ((NameElement*) el)->getArrayId();
 
                         if (type) {
                             if (type->is(T_INT)) {
                                 if (id) {
-                                    line << "lw $t2, " << idTmp << endl;
+                                    line << "lw $t2, " << *id << endl;
                                 }
                                 line << "lw $t0, " << (id ? "($t2)" : el->toString()) << endl;
                                 line << "sw $t0" << ", " << this->var->toString();
                             } else if (type->is(T_FLOAT)) {
                                 if (id) {
-                                    line << "lw $t2, " << idTmp << endl;
+                                    line << "lw $t2, " << *id << endl;
                                 }
                                 line << "l.s $f0, " << (id ? "($t2)" : el->toString()) << endl;
                                 line << "cvt.w.s $f0, $f0" << endl;
@@ -95,13 +94,12 @@ protected:
                     } else if (ElementUtilities::isName(el)) {
                         Type * type = spimCode->getVariable(el->toString());
 
-                        int * id = ((NameElement*) el)->getArrayId();
-                        string idTmp = this->generateIndexComputing(spimCode, line, id);
+                        string * id = ((NameElement*) el)->getArrayId();
 
                         if (type) {
                             if (type->is(T_INT)) {
                                 if (id) {
-                                    line << "lw $t2, " << idTmp << endl;
+                                    line << "lw $t2, " << *id << endl;
                                 }
                                 line << "lw $t0, " << (id ? "($t2)" : el->toString()) << endl;
                                 line << "mtc1 $t0, $f0" << endl;
@@ -109,7 +107,7 @@ protected:
                                 line << "s.s " << "$f0" << ", " << this->var->toString();
                             } else if (type->is(T_FLOAT)) {
                                 if (id) {
-                                    line << "lw $t2, " << idTmp << endl;
+                                    line << "lw $t2, " << *id << endl;
                                 }
                                 line << "l.s $f0, " << (id ? "($t2)" : el->toString()) << endl;
                                 line << "s.s " << "$f0" << ", " << this->var->toString();

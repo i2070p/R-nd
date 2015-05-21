@@ -2,26 +2,26 @@
 #include <stdio.h>
 #include <fstream> 
 #include <sstream>  
-#include <stack>    
+#include <stack>     
 #include <vector>   
-#include <string>     
+#include <string>      
 #include "StackAdapter.h"
 #include <iostream> 
 #include "Elements/ElementFactory.h"    
-#include "Operations/Builder.h"       
-#include <map>      
-#define INFILE_ERROR 1           
-#define OUTFILE_ERROR 2      
-          
+#include "Operations/Builder.h"         
+#include <map>       
+#define INFILE_ERROR 1              
+#define OUTFILE_ERROR 2       
+           
 extern "C" int yylex(); 
 extern "C" int yyerror(const char *msg, ...);
   
 using namespace std;
-  
+     
      
 ofstream trojki;
 ofstream spim;
- 
+    
 Builder builder;
 
 %}
@@ -108,16 +108,16 @@ line
     | print ';' { 
           builder.addExpressionToSimpleOperation(); 
     }  
-    | read ';' { 
+    | read ';' {   
         builder.addSimpleOperationToCurrentBlock();
-    }
-    ;     
- 
-block 
-    : BEGIN_BLOCK lines END_BLOCK { } 
-    | line { }     
+    }       
+    ;         
+  
+block  
+    : BEGIN_BLOCK lines END_BLOCK { }     
+    | line { }      
 
-while_opr
+while_opr 
     : WHILE '(' fin_expr ')' { builder.startWhile(); }
 
        
@@ -205,7 +205,7 @@ logic_expr
         |logic_expr '>' expr    {
             builder.addToExpression(ElementFactory::createElement(GREATERTHAN));      
         }
-        |logic_expr '<' expr    {
+        |logic_expr '<' expr    { 
             builder.addToExpression(ElementFactory::createElement(LESSTHAN));      
         }
         |logic_expr NOT_EQUAL expr     {
@@ -244,22 +244,22 @@ skladnik
 	|czynnik		{
         
         } 
-	;         
+	;          
 czynnik  
-	:NAME			{  cout << "name exp" << endl;
+	:NAME			{ 
             builder.addToExpression(ElementFactory::createElement($1)); 
         }     
-	|INTEGER		{  cout << "int exp" << endl;
+	|INTEGER		{  
             builder.addToExpression(ElementFactory::createElement($1));
         } 
-	|FLOAT	 		{ cout << "float exp" << endl;
+	|FLOAT	 		{ 
             builder.addToExpression(ElementFactory::createElement($1));  
-        }  
-	|STR			{ cout << "str exp" << endl;
+        }   
+	|STR			{ 
             builder.addToExpression(ElementFactory::createElement($1, false));  
-        } 
+        }  
         |NAME '[' logic_expr ']' { 
-            builder.addToExpression(ElementFactory::createElement($1, 3));    
+            builder.addToExpression(ElementFactory::createArrayElement($1));    
         }
 	|'(' logic_expr ')'	{
                

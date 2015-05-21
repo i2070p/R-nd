@@ -33,10 +33,10 @@ public:
         return result;
     }
 
-    static Element * createElement(string value, int id) {
-        return new NameElement(value, id);
+    static Element * createArrayElement(string value) {
+        return new NameElement(value, true);
     }
-
+    
     static Element * createElement(SignType value) {
         return new SignElement(value);
     }
