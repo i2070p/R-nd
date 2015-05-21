@@ -10,7 +10,7 @@ class NameElement : public LiteralElement<string> {
 public:
 
     NameElement(string value) : LiteralElement(value) {
-        this->ids = NULL;
+        this->id = NULL;
         this->array = false;
     }
 
@@ -19,15 +19,11 @@ public:
     }
 
     string * getArrayId() {
-        return this->ids;
-    }
-
-    Element * _getArrayId() {
         return this->id;
     }
 
     void setArrayId(string * id) {
-        this->ids = id;
+        this->id = id;
     }
 
     bool isArray() {
@@ -36,6 +32,5 @@ public:
 
 protected:
     bool array;
-    string * ids;
-    Element * id;
+    string * id;
 };

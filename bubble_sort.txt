@@ -1,0 +1,50 @@
+runner <<
+    
+    {ZORDOFANIE PONPELGOFE}
+    { 5.5, 4.2, 8.4, 1.1, 9.9, 0-4.3, 11.0, 4.0, 0.0, 0.2 }
+
+    tab : array(float, 10);
+    size : int <- 10;
+
+    tab[0] <- 5.5;
+    tab[1] <- 4.2;
+    tab[2] <- 8.4;
+    tab[3] <- 1.1;
+    tab[4] <- 9.9;
+    tab[5] <- 0-4.3;
+    tab[6] <- 11.5;
+    tab[7] <- 4.0;
+    tab[8] <- 0.0;
+    tab[9] <- 0.2;
+    
+    @p "Elementy przed sortowaniem";
+    k : int <- 0;
+    @w ( k < size ) <<
+        @p tab[k];  
+        k <- k + 1;
+    >> 
+       
+    b : int <- 1;
+    temp : float <- 0;
+
+    @w (b = 1) <<
+        b <- 0;
+        k <- 0;
+        @w ( k < size - 1 ) <<           
+            @? (tab[k] > tab[k+1]) <<                
+                temp <- tab[k];
+                tab[k] <- tab[k+1];
+                tab[k+1] <- temp;
+                b <- 1;
+            >>
+            k <- k + 1;
+        >> 
+    >>
+
+    @p "Elementy po sortowaniu";
+    k <- 0;
+    @w ( k < size ) <<
+        @p tab[k];  
+        k <- k + 1;
+    >> 
+>>

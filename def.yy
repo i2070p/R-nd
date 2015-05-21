@@ -7,12 +7,12 @@
 #include <string>      
 #include "StackAdapter.h"
 #include <iostream> 
-#include "Elements/ElementFactory.h"    
+#include "Elements/ElementFactory.h"     
 #include "Operations/Builder.h"         
 #include <map>       
 #define INFILE_ERROR 1              
 #define OUTFILE_ERROR 2       
-           
+            
 extern "C" int yylex(); 
 extern "C" int yyerror(const char *msg, ...);
   
@@ -78,7 +78,7 @@ Builder builder;
 %% 
          
 begin  
-    :RUNNER BEGIN_BLOCK lines END_BLOCK { builder.startGenerate(); cout << "beg\n";  
+    :RUNNER BEGIN_BLOCK lines END_BLOCK { builder.startGenerate();   
          
     } 
     ;    
@@ -86,7 +86,7 @@ begin
 lines            
     :lines line {} 
     |line {}     
-    ;   
+    ;    
     
 line 
     :declaration ';' { builder.addExpressionToSimpleOperation(); }
@@ -119,7 +119,7 @@ block
 
 while_opr 
     : WHILE '(' fin_expr ')' { builder.startWhile(); }
-
+ 
        
 if_opr   
     : O_IF '(' fin_expr ')' { builder.startIf(); } 
@@ -131,8 +131,15 @@ if_else_opr
 
 assignment   
     :NAME ASSIGNMENT fin_expr { 
-        builder.buildAssignment($1);  
-    }       
+        builder.buildAssignment($1);   
+    }     
+    |NAME { 
+        builder.buildArrayAssignment($1);   
+    } '[' fin_expr ']' { 
+        builder.addArrayIndexExpression(); 
+    } ASSIGNMENT fin_expr {  
+         
+    }  
     ;     
 
 print   
@@ -150,11 +157,11 @@ read
     }
     
     ;
-
-
-comment   
+  
+ 
+comment    
     : COMMENT {  
-    
+     
 }
 
 

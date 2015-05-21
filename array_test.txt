@@ -2,14 +2,22 @@ runner <<
     
     {array test}
     {0, 1, 2, 3, 4.5, 5, 6, 7, 8, 9, 10, 11, 12, 13,14,15,16,17,18,19,20 }
-    
+ 
     f : float <- 3.99;
-    i : int <- 4;
+    i : int;
+    i <- 4.0;
 
-    tab : array(float, 10);
+    tab : array(float, 21);
     
+    k : int <- 0;
+    @w ( k < 21  ) <<  
+        tab[k] <- k + 1;
+        k <- k + 1;
+    >>
+
     t : int <- tab[tab[2] + tab[2.13] + tab[2 * 3.14 + f]];
     @p t;
+    @p tab[15+2];
     @p tab[2]+tab[2];
     @p tab[tab[2] + tab[2.13] + tab[2 * 3.14 + f]];
     @p tab[2.0];
@@ -18,9 +26,37 @@ runner <<
     @p tab[i];
 
     @p "Elementy tab";
-    k : int <- 0;
-    @w ( k < 10  ) <<
-        @p tab[k + f];  
+    k <- 0;
+    @w ( k < 21  ) <<
+        @p tab[k + 0];  
         k <- k + 1;
     >>
+
+    clone : array(int, 10);
+    
+    k <- 0;
+    @w ( k < 10  ) <<
+        clone[k] <- tab[k];  
+        k <- k + 1;
+    >>   
+
+    @p "Elementy clone";
+    k <- 0;
+    @w ( k < 10  ) <<
+
+        @? (clone[k] = 5) <<
+            clone[k] <- 9;
+        >> @! <<
+            clone[k] <- tab[tab[2] + tab[2.13] + tab[2 * 3.14 + f]];
+        >>
+
+        k <- k + 1;
+    >> 
+
+    @p "Elementy clone po modyfikacji";
+    k <- 0;
+    @w ( k < 10 ) <<
+        @p clone[k];  
+        k <- k + 1;
+    >> 
 >>

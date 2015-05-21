@@ -51,7 +51,6 @@ protected:
                         compute((SignElement*) el, spimCode);
                     } else {
 
-                        cout << el->toString() << endl;
                         if (ElementUtilities::isName(el)) {
                             stringstream line;
                             if (((NameElement*) el)->isArray()) {
@@ -456,13 +455,9 @@ protected:
 
     string generateIndexComputing(SpimCodeContainer * spimCode, Element* e, stringstream & line) {
         string idTmp = "";
-        for (int i = 0; i < spimCode->mStack.size(); i++) {
-            cout << " " << spimCode->mStack.at(i)->toString();
-        }
 
         Element * m = spimCode->mStack.pop();
 
-        cout << endl;
         line << "la $t2, " << e->toString() << endl;
 
         if (ElementUtilities::isInt(m)) {
@@ -492,8 +487,6 @@ protected:
         line << "add $t2, $t2, $t4" << endl;
         idTmp = spimCode->getNextTmpVar();
         ((NameElement*) e)->setArrayId(new string(idTmp));
-        cout << "  >=== " << idTmp << endl;
-        //spimCode->mStack.push(new NameElement(idTmp));
         line << "sw $t2, " << idTmp << endl;
         spimCode->addVariable(idTmp, new Type(T_INT));
 

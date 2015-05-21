@@ -89,8 +89,12 @@ public:
         this->currentSimple = new Assignment(this->current, new NameElement(name));
     }
 
+    void buildArrayAssignment(string name) {
+        this->currentSimple = new Assignment(this->current, new NameElement(name, true));
+    }    
+    
     void buildArrayDeclaration(string name) {
-        this->currentSimple = new ArrayDeclaration(this->current, new NameElement(name), new Type(this->dataType), this->arraySize);
+        this->currentSimple = new ArrayDeclaration(this->current, new NameElement(name, true), new Type(this->dataType), this->arraySize);
     }
 
     void buildPrint() {
@@ -119,15 +123,26 @@ public:
             this->exp = NULL;
         }
     }
+
     void finishIndexExpression() {
         if (this->exp) {
             this->exps.push(this->exp);
             this->exp = NULL;
         }
     }
+
     void popExpression() {
         if (this->exps.size()) {
             this->exp = this->exps.pop();
+        }
+    }
+
+    void addArrayIndexExpression() {
+        if (!this->exps.isEmpty()) {
+            Expression * exp = this->exps.pop();
+            if (dynamic_cast<Assignment *> (this->currentSimple)) {
+                ((Assignment *)this->currentSimple)->addArrayIndexExpression(exp);
+            }
         }
     }
 
