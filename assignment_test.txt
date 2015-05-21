@@ -1,0 +1,22 @@
+runner <<
+    
+    {assignment test}
+    i : int <- 4;
+    str1 : string <- "fsdffds";
+    f : float;
+
+    f <- (i + 4.14)/2;
+    @p f;
+    
+    str1 <- "fssdfsdfsf444";
+    str1 <- "23fmfn";
+    @p str1;
+
+    i <- 44 + 1.13;
+    @p i;
+
+    str2 : string;
+    str2 <- "string2";
+    str2 <- str1;
+    @p str2;
+>>

@@ -123,25 +123,25 @@ while_opr
        
 if_opr   
     : O_IF '(' fin_expr ')' { builder.startIf(); } 
-      
-if_else_opr           
+         
+if_else_opr            
     : ELSE {	
     builder.addElse();   
-} 
-
+}   
+      
 assignment   
-    :NAME ASSIGNMENT fin_expr { 
-        builder.buildAssignment($1);   
-    }     
-    |NAME { 
+    :NAME ASSIGNMENT fin_expr {       
+        builder.buildAssignment($1);        
+    }        
+    |NAME {          
         builder.buildArrayAssignment($1);   
-    } '[' fin_expr ']' { 
-        builder.addArrayIndexExpression(); 
+    } '[' fin_expr ']' {         
+        builder.addArrayIndexExpression();  
     } ASSIGNMENT fin_expr {  
          
     }  
-    ;     
-
+    ;          
+    
 print   
     :PRINT STR { 
         builder.buildPrint($2);
@@ -149,13 +149,17 @@ print
     |PRINT fin_expr  { 
         builder.buildPrint();
     }
-    ;
+    ;  
 
 read   
-    :READ NAME { 
+    :READ NAME {   
         builder.buildRead($2);
     }
-    
+    |READ NAME {   
+        builder.buildArrayRead($2);   
+    } '[' fin_expr ']' { 
+        builder.addArrayIndexExpression(); 
+    }
     ;
   
  
@@ -167,18 +171,18 @@ comment
 
 array_declaration  
     :NAME ':' array {
-        builder.buildArrayDeclaration($1);
+        builder.buildArrayDeclaration($1); 
     }
-    ;
-
+    ;   
+    
 declaration   
-    :NAME ':' type {
+    :NAME ':' type { 
         builder.buildDeclaration($1); 
-     
+      
     }
     |declaration ASSIGNMENT fin_expr {
 	 
-    }      
+    }        
     ;
 
 array

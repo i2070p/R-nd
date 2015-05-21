@@ -1,0 +1,28 @@
+runner <<
+    
+    {read test}
+    a : int;
+    b : float;
+
+    tab_i : array(int, 5);
+    tab_f : array(float, 5);
+
+    @p "Podaj a [INT]: ";
+    @r a;
+    @p b;
+    
+    @p "Podaj b [FLOAT]: ";
+    @r b;
+    @p b;
+
+    @p "Podaj tab_i[3] [INT]: ";
+    @r tab_i[3];
+    @p tab_i[1+1+1];
+
+    @p "Podaj tab_f[3] [FLOAT]: ";
+    @r tab_f[3];
+    @p tab_f[1+1+1];
+
+
+
+>>

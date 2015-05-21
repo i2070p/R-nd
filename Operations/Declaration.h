@@ -26,8 +26,11 @@ protected:
     Type * type;
 
     void generate(SpimCodeContainer * spimCode) {
+
         string val = "";
+
         if (this->exp) {
+            this->exp->startGenerate(spimCode);
             if (this->exp->isStringExpression()) {
                 if (this->type->is(T_STR)) {
                     val = this->exp->getValueLiteral()->toString();
@@ -36,9 +39,9 @@ protected:
                 }
             } else {
                 stringstream line;
-                this->exp->startGenerate(spimCode);
+
                 Element * el = this->exp->getValueLiteral();
- 
+
                 if (this->type->is(T_STR)) {
                     throw Strings::getIncompatibleTypesText();
                 }
@@ -55,7 +58,7 @@ protected:
                         Type * type = spimCode->getVariable(el->toString());
 
                         string * id = ((NameElement*) el)->getArrayId();
-               
+
                         if (type) {
                             if (type->is(T_INT)) {
                                 if (id) {
@@ -119,9 +122,13 @@ protected:
             }
         }
         if (val.length() > 0) {
-            spimCode->addVariable(this->var->toString(), this->type, val);
+            spimCode->addStringVar(this->var->toString(), val);
         } else {
-            spimCode->addVariable(this->var->toString(), this->type);
+            if (this->type->is(T_STR)) {
+                spimCode->addStringVar(this->var->toString(), "");
+            } else {
+                spimCode->addVariable(this->var->toString(), this->type);
+            }
         }
 
     }

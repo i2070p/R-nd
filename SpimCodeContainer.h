@@ -24,8 +24,8 @@ public:
         string result = this->getNextTmpVar();
         this->addVariable(result, new Type(T_INT), val);
         return result;
-    }    
-    
+    }
+
     string addTmpFloatVar(string val) {
         string result = this->getNextTmpVar();
         this->addVariable(result, new Type(T_FLOAT), val);
@@ -34,8 +34,35 @@ public:
 
     string addTmpStringVar(string val) {
         string result = this->getNextTmpVar();
-        this->addVariable(result, new Type(T_STR), val);
+
+        Type * type = new Type(T_STR);
+        this->vars.insert(pair<string, Type*>(result, type));
+        this->stringVariables.insert(pair<string, string>(result, val));
+
         return result;
+    }
+
+    string getStringVarValue(string key) {
+        map<string, string>::const_iterator it = this->stringVariables.find(key);
+        if (it == this->stringVariables.end()) {
+            throw string(Strings::getUndeclaredText(key));
+        }
+        return this->stringVariables[key];       
+    }
+
+    void addStringVar(string var, string val) {
+        Type * type = new Type(T_STR);
+        this->vars.insert(pair<string, Type*>(var, type));
+        this->stringVariables.insert(pair<string, string>(var, val));
+
+    }
+
+    void changeStrVarValue(string var, string val) {
+        map<string, string>::const_iterator it = this->stringVariables.find(var);
+        if (it == this->stringVariables.end()) {
+            throw string(Strings::getUndeclaredText(var));
+        }
+        this->stringVariables[var] = val;
     }
 
     void addVariable(string name, Type * type, int init) {
@@ -113,15 +140,21 @@ public:
     }
 
     string toString() {
+
         stringstream ss;
+
+        for (std::map<string, string>::iterator it = this->stringVariables.begin(); it != this->stringVariables.end(); ++it) {
+            this->variables << it->first << ": .asciiz " << it->second << endl;
+        }
+
         ss << this->variables.str() << endl << operations.str() << endl;
         return ss.str();
     }
     StackAdapter<Element*> mStack;
-    
+
 protected:
     stringstream variables, operations;
-
+    map<string, string> stringVariables;
     map<string, Type*> vars;
     map<string, int> arrayLength;
     int tmp, adr, lbl;

@@ -30,6 +30,7 @@ public:
     }
 
     bool isStringExpression() {
+        
         return this->elements.size() == 1 && ElementUtilities::isString(this->elements.at(0));
     }
 
@@ -38,9 +39,9 @@ protected:
     Element * result;
 
     void generate(SpimCodeContainer * spimCode) {
-
+        
         if (this->isStringExpression()) {
-
+            this->result = this->elements.top();
         } else {
             for (int i = 0; i<this->elements.size(); i++) {
                 Element * el = this->elements.at(i);
@@ -50,11 +51,9 @@ protected:
                     if (ElementUtilities::isSign(el)) {
                         compute((SignElement*) el, spimCode);
                     } else {
-
                         if (ElementUtilities::isName(el)) {
                             stringstream line;
                             if (((NameElement*) el)->isArray()) {
-
                                 this->generateIndexComputing(spimCode, el, line);
                                 spimCode->addOperation(line.str());
                             }

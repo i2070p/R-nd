@@ -91,8 +91,8 @@ public:
 
     void buildArrayAssignment(string name) {
         this->currentSimple = new Assignment(this->current, new NameElement(name, true));
-    }    
-    
+    }
+
     void buildArrayDeclaration(string name) {
         this->currentSimple = new ArrayDeclaration(this->current, new NameElement(name, true), new Type(this->dataType), this->arraySize);
     }
@@ -108,7 +108,11 @@ public:
     void buildRead(string name) {
         this->currentSimple = new Read(this->current, new NameElement(name));
     }
-
+    
+    void buildArrayRead(string name) {
+        this->currentSimple = new Read(this->current, new NameElement(name,true));
+    }
+    
     void addToExpression(Element * element) {
         if (this->exp) {
             this->exp->addElement(element);
@@ -142,6 +146,10 @@ public:
             Expression * exp = this->exps.pop();
             if (dynamic_cast<Assignment *> (this->currentSimple)) {
                 ((Assignment *)this->currentSimple)->addArrayIndexExpression(exp);
+            } else {
+                if (dynamic_cast<Read *> (this->currentSimple)) {
+                    ((Read *)this->currentSimple)->addArrayIndexExpression(exp);
+                }
             }
         }
     }

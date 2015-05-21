@@ -30,25 +30,30 @@ protected:
     NameElement * var;
 
     void generate(SpimCodeContainer * spimCode) {
+
         Type * type2 = spimCode->getVariable(this->var->toString());
+
         if (this->exp) {
+            this->exp->startGenerate(spimCode);
             if (this->exp->isStringExpression()) {
                 if (!type2->is(T_STR)) {
                     throw Strings::getIncompatibleTypesText();
                 }
-                string tmp = spimCode->addTmpStringVar(this->exp->getValueLiteral()->toString());
+                spimCode->changeStrVarValue(this->var->toString(), this->exp->getValueLiteral()->toString());
                 //TODO obsluga przypisania do zmiennej string
             } else {
                 stringstream line;
 
-                this->exp->startGenerate(spimCode);
-
                 Element * el = this->exp->getValueLiteral();
 
-                if (type2->is(T_STR)) {
+                Type * type3 = spimCode->getVariable(el->toString());
+
+                if (type3->is(T_STR)) {
+                    spimCode->changeStrVarValue(this->var->toString(), spimCode->getStringVarValue(el->toString()));
+                } else if (type2->is(T_STR)) {
                     throw Strings::getIncompatibleTypesText();
                 }
-               
+
                 bool isArray = this->var->isArray();
                 if (isArray) {
                     this->arrayIndexExp->startGenerate(spimCode);
@@ -134,7 +139,7 @@ protected:
         }
     }
 
-   void generateIndexComputing(SpimCodeContainer * spimCode, Element * m,stringstream & line) {
+    void generateIndexComputing(SpimCodeContainer * spimCode, Element * m, stringstream & line) {
 
         line << "la $t2, " << this->var->toString() << endl;
 
