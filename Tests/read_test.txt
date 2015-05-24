@@ -9,7 +9,7 @@ runner <<
 
     @p "Podaj a [INT]: ";
     @r a;
-    @p b;
+    @p a;
     
     @p "Podaj b [FLOAT]: ";
     @r b;

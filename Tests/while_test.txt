@@ -1,12 +1,12 @@
 runner <<
 
-    {DO IEZD GOMENDAŻ}
+    {while test}
 
     k : float <- 0;
 
     @w ( k < 0.5 + 0.03  ) <<
-        k <- k + 0.01;        
+        k <- k + 0.01;   
+        @p k;
     >>
-    
-    @p 2;
+   
 >>

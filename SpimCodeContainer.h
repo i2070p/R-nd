@@ -51,6 +51,7 @@ public:
     }
 
     void addStringVar(string var, string val) {
+        this->checkVar(var);
         Type * type = new Type(T_STR);
         this->vars.insert(pair<string, Type*>(var, type));
         this->stringVariables.insert(pair<string, string>(var, val));
@@ -65,27 +66,42 @@ public:
         this->stringVariables[var] = val;
     }
 
+    string getStrVarValue(string var) {
+        map<string, string>::const_iterator it = this->stringVariables.find(var);
+        if (it == this->stringVariables.end()) {
+            throw string(Strings::getUndeclaredText(var));
+        }
+        return this->stringVariables[var];
+    }
+    
+    
+    
     void addVariable(string name, Type * type, int init) {
+        this->checkVar(name);
         this->vars.insert(pair<string, Type*>(name, type));
         this->variables << name << ": " << type->toString() << " " << init << endl;
     }
 
     void addVariable(string name, Type * type, float init) {
+        this->checkVar(name);        
         this->vars.insert(pair<string, Type*>(name, type));
         this->variables << name << ": " << type->toString() << " " << init << endl;
     }
 
     void addVariable(string name, Type * type, string init) {
+        this->checkVar(name);
         this->vars.insert(pair<string, Type*>(name, type));
         this->variables << name << ": " << type->toString() << " " << init << endl;
     }
 
     void addVariable(string name, Type * type) {
+        this->checkVar(name);        
         this->vars.insert(pair<string, Type*>(name, type));
         this->variables << name << ": " << type->toString() << (type->is(T_STR) ? " \"\"" : " 0") << endl;
     }
 
     void addArray(string name, Type * type, int size) {
+        this->checkVar(name);
         this->vars.insert(pair<string, Type*>(name, type));
         this->arrayLength.insert(pair<string, int>(name, size));
         this->variables << name << ": " << type->toString() << " 0:" << size << endl;
@@ -158,5 +174,15 @@ protected:
     map<string, Type*> vars;
     map<string, int> arrayLength;
     int tmp, adr, lbl;
+    
+private:    
+    void checkVar(string var) {
+        map<string, Type*>::const_iterator it = this->vars.find(var);
+        if (it != this->vars.end()) {
+            throw string(Strings::getAlreadyExistsText(var));
+        }
+
+    }
+    
 };
 

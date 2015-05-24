@@ -2,67 +2,317 @@
 $f_one: .float 1
 $f_zero: .float 0
 $new_line: .asciiz "\n"
-i: .word 0
-f: .float 0
-$tmp1: .float 4.14
-$tmp0: .float 0
-$tmp2: .float 0
-$tmp4: .float 1.13
-$tmp3: .float 0
-str1: .asciiz "23fmfn"
-str2: .asciiz "23fmfn"
+tab: .float 0:10
+size: .word 0
+$tmp0: .float 5.5
+$tmp1: .float 4.2
+$tmp2: .float 8.4
+$tmp3: .float 1.1
+$tmp4: .float 9.9
+$tmp6: .float 4.3
+$tmp5: .float 0
+$tmp7: .float 11.5
+$tmp8: .float 4
+$tmp9: .float 0
+$tmp10: .float 0.2
+k: .word 0
+$tmp12: .word 0
+$tmp13: .word 0
+$tmp14: .word 0
+b: .word 0
+$tmp15: .word 0
+$tmp16: .word 0
+$tmp17: .word 0
+$tmp18: .word 0
+$tmp19: .word 0
+$tmp20: .word 0
+$tmp21: .float 0
+$tmp22: .word 0
+temp: .float 0
+$tmp23: .word 0
+$tmp24: .word 0
+$tmp25: .word 0
+$tmp26: .word 0
+$tmp28: .word 0
+$tmp29: .word 0
+$tmp30: .word 0
+$tmp11: .asciiz "Elementy przed sortowaniem"
+$tmp27: .asciiz "Elementy po sortowaniu"
 
 .text
-li $t0, 4
-sw $t0, i
-lw $t0, i
+li $t0, 10
+sw $t0, size
+la $t2, tab
+li $t4, 0
+li $t5, 4
+mul $t4, $t4, $t5
+add $t6, $t2, $t4
+l.s $f0, $tmp0
+s.s $f0, ($t6)
+la $t2, tab
+li $t4, 1
+li $t5, 4
+mul $t4, $t4, $t5
+add $t6, $t2, $t4
+l.s $f0, $tmp1
+s.s $f0, ($t6)
+la $t2, tab
+li $t4, 2
+li $t5, 4
+mul $t4, $t4, $t5
+add $t6, $t2, $t4
+l.s $f0, $tmp2
+s.s $f0, ($t6)
+la $t2, tab
+li $t4, 3
+li $t5, 4
+mul $t4, $t4, $t5
+add $t6, $t2, $t4
+l.s $f0, $tmp3
+s.s $f0, ($t6)
+la $t2, tab
+li $t4, 4
+li $t5, 4
+mul $t4, $t4, $t5
+add $t6, $t2, $t4
+l.s $f0, $tmp4
+s.s $f0, ($t6)
+li $t0, 0
 mtc1 $t0, $f0
 cvt.s.w $f0, $f0
-l.s $f1, $tmp1
-add.s $f0, $f0, $f1
-s.s $f0, $tmp0
-li $t0, 2
-mtc1 $t0, $f1
-cvt.s.w $f1, $f1
-l.s $f0, $tmp0
-div.s $f0, $f0, $f1
-s.s $f0, $tmp2
-l.s $f0, $tmp2
-s.s $f0, f
-l.s $f12, f
+l.s $f1, $tmp6
+sub.s $f0, $f0, $f1
+s.s $f0, $tmp5
+la $t2, tab
+li $t4, 5
+li $t5, 4
+mul $t4, $t4, $t5
+add $t6, $t2, $t4
+l.s $f0, $tmp5
+s.s $f0, ($t6)
+la $t2, tab
+li $t4, 6
+li $t5, 4
+mul $t4, $t4, $t5
+add $t6, $t2, $t4
+l.s $f0, $tmp7
+s.s $f0, ($t6)
+la $t2, tab
+li $t4, 7
+li $t5, 4
+mul $t4, $t4, $t5
+add $t6, $t2, $t4
+l.s $f0, $tmp8
+s.s $f0, ($t6)
+la $t2, tab
+li $t4, 8
+li $t5, 4
+mul $t4, $t4, $t5
+add $t6, $t2, $t4
+l.s $f0, $tmp9
+s.s $f0, ($t6)
+la $t2, tab
+li $t4, 9
+li $t5, 4
+mul $t4, $t4, $t5
+add $t6, $t2, $t4
+l.s $f0, $tmp10
+s.s $f0, ($t6)
+li $v0, 4
+la $a0, $tmp11
+syscall
+li $v0, 4
+la $a0, $new_line
+syscall
+li $t0, 0
+sw $t0, k
+label1:
+lw $t0, k
+lw $t1, size
+slt $t0, $t0, $t1
+sw $t0, $tmp12
+li $t0, 0
+lw $t1, $tmp12
+beq $t0, $t1, label2
+
+la $t2, tab
+lw $t4, k
+li $t5, 4
+mul $t4, $t4, $t5
+add $t2, $t2, $t4
+sw $t2, $tmp13
+
+lw $t2, $tmp13
+l.s $f12, ($t2)
 li $v0, 2
 syscall
 li $v0, 4
 la $a0, $new_line
 syscall
-li $v0, 4
-la $a0, str1
-syscall
-li $v0, 4
-la $a0, $new_line
-syscall
-li $t0, 44
-mtc1 $t0, $f0
-cvt.s.w $f0, $f0
-l.s $f1, $tmp4
-add.s $f0, $f0, $f1
-s.s $f0, $tmp3
-l.s $f0, $tmp3
-cvt.w.s $f0, $f0
-mfc1 $t0, $f0
-sw $t0, i
-lw $t0, i
-li $v0, 1
-move $a0, $t0
-syscall
-li $v0, 4
-la $a0, $new_line
-syscall
+lw $t0, k
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, $tmp14
+lw $t0, $tmp14
+sw $t0, k
+b label1
+label2:
+li $t0, 1
+sw $t0, b
+label3:
+lw $t0, b
+li $t1, 1
+seq $t0, $t0, $t1
+sw $t0, $tmp15
+li $t0, 0
+lw $t1, $tmp15
+beq $t0, $t1, label4
 
+li $t0, 0
+sw $t0, b
+li $t0, 0
+sw $t0, k
+label5:
+lw $t0, size
+li $t1, 1
+sub $t0, $t0, $t1
+sw $t0, $tmp16
+lw $t0, k
+lw $t1, $tmp16
+slt $t0, $t0, $t1
+sw $t0, $tmp17
+li $t0, 0
+lw $t1, $tmp17
+beq $t0, $t1, label6
+
+la $t2, tab
+lw $t4, k
+li $t5, 4
+mul $t4, $t4, $t5
+add $t2, $t2, $t4
+sw $t2, $tmp18
+
+lw $t0, k
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, $tmp19
+la $t2, tab
+lw $t4, $tmp19
+li $t5, 4
+mul $t4, $t4, $t5
+add $t2, $t2, $t4
+sw $t2, $tmp20
+
+lw $t2, $tmp18
+l.s $f0, ($t2)
+lw $t2, $tmp20
+l.s $f1, ($t2)
+l.s $f2, $f_zero
+l.s $f3, $f_one
+c.lt.s $f1, $f0
+movt.s $f2, $f3
+mov.s $f0, $f2
+s.s $f0, $tmp21
+li $t0, 0
+l.s $f0, $tmp21
+l.s $f2, $f_one
+l.s $f3, $f_zero
+c.eq.s $f0, $f3
+movt.s $f2, $f3
+mov.s $f0, $f2 
+cvt.w.s $f0, $f0
+mfc1 $t1, $f0
+beq $t0, $t1, label7
+la $t2, tab
+lw $t4, k
+li $t5, 4
+mul $t4, $t4, $t5
+add $t2, $t2, $t4
+sw $t2, $tmp22
+
+lw $t2, $tmp22
+l.s $f0, ($t2)
+s.s $f0, temp
+lw $t0, k
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, $tmp23
+la $t2, tab
+lw $t4, $tmp23
+li $t5, 4
+mul $t4, $t4, $t5
+add $t2, $t2, $t4
+sw $t2, $tmp24
+
+la $t2, tab
+lw $t4, k
+li $t5, 4
+mul $t4, $t4, $t5
+add $t6, $t2, $t4
+lw $t2, $tmp24
+l.s $f0, ($t2)
+s.s $f0, ($t6)
+lw $t0, k
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, $tmp25
+la $t2, tab
+lw $t4, $tmp25
+li $t5, 4
+mul $t4, $t4, $t5
+add $t6, $t2, $t4
+l.s $f0, temp
+s.s $f0, ($t6)
+li $t0, 1
+sw $t0, b
+label7:
+lw $t0, k
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, $tmp26
+lw $t0, $tmp26
+sw $t0, k
+b label5
+label6:
+b label3
+label4:
 li $v0, 4
-la $a0, str2
+la $a0, $tmp27
 syscall
 li $v0, 4
 la $a0, $new_line
 syscall
+li $t0, 0
+sw $t0, k
+label8:
+lw $t0, k
+lw $t1, size
+slt $t0, $t0, $t1
+sw $t0, $tmp28
+li $t0, 0
+lw $t1, $tmp28
+beq $t0, $t1, label9
+
+la $t2, tab
+lw $t4, k
+li $t5, 4
+mul $t4, $t4, $t5
+add $t2, $t2, $t4
+sw $t2, $tmp29
+
+lw $t2, $tmp29
+l.s $f12, ($t2)
+li $v0, 2
+syscall
+li $v0, 4
+la $a0, $new_line
+syscall
+lw $t0, k
+li $t1, 1
+add $t0, $t0, $t1
+sw $t0, $tmp30
+lw $t0, $tmp30
+sw $t0, k
+b label8
+label9:
 

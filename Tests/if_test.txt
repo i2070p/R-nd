@@ -1,0 +1,45 @@
+runner <<
+
+    {if test}
+
+    i1 : int <- 2;
+    i2 : int <- 10;
+    i3 : int <- 44;
+    
+    @? (i1 + 2 > i2) <<
+        @p "1true";
+        @? (i2 + 2 > i2) <<
+            @p "1true, 2true";
+            @? (i2 + i1 >= i3 + 5) <<
+                @p "1false, 2true, 3true";
+            >> @! <<
+                @p "1false, 2true, 3false";
+            >>
+        >> @! <<
+            @p "1true, 2false";
+            @? (i2 + i1 >= i3 + 4) <<
+                @p "1false, 2false, 3true";
+            >> @! <<
+                @p "1false, 2false, 3false";
+            >>
+        >>
+    >> @! <<
+        @p "1false";
+        @? (i2 + 2 < i3) <<
+            @p "1false, 2true";
+            @? (i2 + i1 >= i3 + 5) <<
+                @p "1false, 2true, 3true";
+            >> @! <<
+                @p "1false, 2true, 3false";
+            >>
+        >> @! <<
+            @p "1false, 2false";
+            @? (i2 + i1 >= i3 + 4) <<
+                @p "1false, 2false, 3true";
+            >> @! <<
+                @p "1false, 2false, 3false";
+            >>
+        >>
+    >>
+   
+>>

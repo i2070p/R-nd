@@ -74,7 +74,7 @@
 #include <iostream> 
 #include "Elements/ElementFactory.h"     
 #include "Operations/Builder.h"         
-#include <map>       
+#include <map>        
 #define INFILE_ERROR 1              
 #define OUTFILE_ERROR 2       
             
@@ -1463,7 +1463,7 @@ yyreduce:
   case 19:
 #line 133 "def.yy" /* yacc.c:1646  */
     {       
-        builder.buildAssignment((yyvsp[-2].text));        
+        builder.buildAssignment((yyvsp[-2].text));         
     }
 #line 1469 "def.tab.cc" /* yacc.c:1646  */
     break;

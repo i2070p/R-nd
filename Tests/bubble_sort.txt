@@ -25,14 +25,13 @@ runner <<
     >> 
        
     b : int <- 1;
-    temp : float <- 0;
-
+    
     @w (b = 1) <<
         b <- 0;
         k <- 0;
         @w ( k < size - 1 ) <<           
             @? (tab[k] > tab[k+1]) <<                
-                temp <- tab[k];
+                temp : float <- tab[k];
                 tab[k] <- tab[k+1];
                 tab[k+1] <- temp;
                 b <- 1;

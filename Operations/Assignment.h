@@ -40,17 +40,18 @@ protected:
                     throw Strings::getIncompatibleTypesText();
                 }
                 spimCode->changeStrVarValue(this->var->toString(), this->exp->getValueLiteral()->toString());
-                //TODO obsluga przypisania do zmiennej string
+
             } else {
                 stringstream line;
 
                 Element * el = this->exp->getValueLiteral();
 
-                Type * type3 = spimCode->getVariable(el->toString());
+               // Type * type3 = spimCode->getVariable(el->toString());
 
-                if (type3->is(T_STR)) {
-                    spimCode->changeStrVarValue(this->var->toString(), spimCode->getStringVarValue(el->toString()));
-                } else if (type2->is(T_STR)) {
+               // if (type3->is(T_STR)) {
+                   // spimCode->changeStrVarValue(this->var->toString(), spimCode->getStringVarValue(el->toString()));
+               // } else
+                if (type2->is(T_STR)) {
                     throw Strings::getIncompatibleTypesText();
                 }
 

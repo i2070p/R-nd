@@ -9,7 +9,7 @@
 #include <iostream> 
 #include "Elements/ElementFactory.h"     
 #include "Operations/Builder.h"         
-#include <map>       
+#include <map>        
 #define INFILE_ERROR 1              
 #define OUTFILE_ERROR 2       
             
@@ -64,7 +64,7 @@ Builder builder;
 %token ARRAY  
 %token TO
 %token DOWNTO
- 
+  
 %token <text> COMMENT
 %token <text> STR
 %token <ival> INTEGER
@@ -131,7 +131,7 @@ if_else_opr
       
 assignment   
     :NAME ASSIGNMENT fin_expr {       
-        builder.buildAssignment($1);        
+        builder.buildAssignment($1);         
     }        
     |NAME {          
         builder.buildArrayAssignment($1);   

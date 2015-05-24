@@ -84,7 +84,8 @@ protected:
                             line << "syscall" << endl;
                         } else if (type->is(T_STR)) {
                             line << "li $v0, 4" << endl;
-                            line << "la $a0, " << el->toString() << endl;
+                            string tmp = spimCode->addTmpStringVar(spimCode->getStrVarValue(el->toString()));
+                            line << "la $a0, " << tmp << endl;
                             line << "syscall" << endl;
                         }
                     }

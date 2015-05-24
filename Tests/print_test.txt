@@ -5,11 +5,16 @@ runner <<
     f : float <- 1.2 * 3;
     c : string <- "fsdffds";
     v : string;
+    tab : array(float, 2);
 
-    v <- "42dsfsdf234";
+    tab[0] <- 4.32;
     
+    v <- "abcdefgh";
+    @p v;
+    v <- "xyzuio";
     @p v;
     @p "test string";
+    @p c;
     @p 2;
     @p 3.1415;
     @p k;
@@ -17,6 +22,8 @@ runner <<
     @p 2+2;
     @p 3.1 + 0.2;
     @p (1 + k);
-    @p ((((2+2.0)/k)*f)/1.25)*4.14/1.2;
 
+    {python: 5.677714285714285}
+    @p ((((2+2.0)/k)*f)/1.25)*4.14/1.2;
+    @p tab[0];
 >>
